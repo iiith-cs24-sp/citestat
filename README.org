@@ -1,0 +1,9 @@
+* Citestat
+
+Run from the root of the project:
+#+begin_src
+npm install
+npm run start 
+#+end_src
+
+then visit [[http://localhost:5173]]
