@@ -1,20 +1,20 @@
 {
-  "name": "citestat",
-  "version": "0.1.0",
-  "description": "",
-  "private": true,
-  "main": "",
-  "license": "ISC",
-  "keywords": [],
-  "scripts": {
-    "install": "concurrently \"cd ./server && npm i\" \"cd ./client && npm i\"",
-    "start": "concurrently \"cd ./server && npm run start\" \"cd ./client && npm run dev\"",
-    "delete-modules": "rm -r ./node_modules && cd ./server && rm -r ./node_modules && cd ../client && rm -r ./node_modules",
-    "check-format": "prettier . --check",
-    "format": "prettier . --write"
-  },
-  "devDependencies": {
-    "concurrently": "^6.3.0",
-    "prettier": "^3.3.3"
-  }
+	"name": "citestat",
+	"version": "0.1.0",
+	"description": "",
+	"private": true,
+	"main": "",
+	"license": "ISC",
+	"keywords": [],
+	"scripts": {
+		"install": "concurrently \"cd ./server && npm i\" \"cd ./client && npm i\"",
+		"start": "concurrently \"cd ./server && npm run start\" \"cd ./client && npm run dev\"",
+		"delete-modules": "rm -r ./node_modules && cd ./server && rm -r ./node_modules && cd ../client && rm -r ./node_modules",
+		"check-format": "prettier . --check",
+		"format": "prettier . --write"
+	},
+	"devDependencies": {
+		"concurrently": "^6.3.0",
+		"prettier": "^3.3.3"
+	}
 }
