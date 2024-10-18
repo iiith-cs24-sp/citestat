@@ -1,0 +1,11 @@
+# Exclude all files
+*.*
+
+# Other than
+!**/*.html
+!**/*.css
+!**/*.json
+!**/*.js
+!**/*.jsx
+!**/*.ts
+!**/*.tsx
