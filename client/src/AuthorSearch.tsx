@@ -7,7 +7,7 @@ interface AuthorWithCount extends AuthorType {
 }
 
 const AuthorSearch = () => {
-	const [authors, setAuthors] = useState<AuthorType[]>([]);
+	const [authors, setAuthors] = useState<AuthorWithCount[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const { search } = useLocation();
