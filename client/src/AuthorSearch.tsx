@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CrossRefResponse, Author as AuthorType } from "./types";
+import Searchbar from "./components/Searchbar";
 
 interface AuthorWithCount extends AuthorType {
 	publicationCount: number;
@@ -16,6 +17,7 @@ const AuthorSearch = () => {
 	useEffect(() => {
 		const fetchResults = async () => {
 			try {
+				setLoading(true);
 				const response = await fetch(
 					`https://api.crossref.org/works?query.author=${encodeURIComponent(query || "")}`,
 				);
@@ -56,6 +58,7 @@ const AuthorSearch = () => {
 
 	return (
 		<div className="p-8">
+			<Searchbar initialQuery={query} />
 			<h2 className="text-3xl font-medium mb-6">
 				Authors matching "{query}"
 			</h2>

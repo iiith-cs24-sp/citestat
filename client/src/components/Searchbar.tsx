@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Searchbar: React.FC = () => {
-	const [query, setQuery] = useState<string>("");
+interface SearchbarProps {
+	initialQuery: string | null;
+}
+
+const Searchbar: React.FC<SearchbarProps> = ({ initialQuery }) => {
+	const [query, setQuery] = useState<string>(
+		initialQuery ? initialQuery : "",
+	);
 	const navigate = useNavigate();
 
 	const handleSearch = () => {

@@ -9,7 +9,7 @@ const Home: React.FC = () => {
 					<p className="text-neutral-500 text-xl">
 						See your impact on the world.
 					</p>
-					<Searchbar />
+					<Searchbar initialQuery={""} />
 				</div>
 			</div>
 		</div>
