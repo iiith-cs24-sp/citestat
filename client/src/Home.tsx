@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Home: React.FC = () => {
-	const [author, setAuthor] = useState<string>("");
+	const [query, setQuery] = useState<string>("");
 	const navigate = useNavigate();
 
 	const handleSearch = () => {
-		if (author.trim()) {
-			navigate(`/author?name=${encodeURIComponent(author)}`);
+		if (query.trim()) {
+			navigate(`/search?name=${encodeURIComponent(query)}`);
 		}
 	};
 
@@ -27,8 +27,8 @@ const Home: React.FC = () => {
 					</p>
 					<input
 						type="text"
-						value={author}
-						onChange={(e) => setAuthor(e.target.value)}
+						value={query}
+						onChange={(e) => setQuery(e.target.value)}
 						onKeyDown={handleKeyDown}
 						placeholder="Search for Author"
 						className="input input-bordered w-full text-2xl px-6 py-6 my-4"

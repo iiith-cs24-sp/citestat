@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from "./Home";
-import Author from "./Author";
+import AuthorSearch from "./AuthorSearch";
 
 function App() {
 	return (
@@ -15,7 +14,7 @@ function App() {
 				<div>
 					<Routes>
 						<Route path="/" element={<Home />} />
-						<Route path="/author" element={<Author />} />
+						<Route path="/search" element={<AuthorSearch />} />
 					</Routes>
 				</div>
 			</div>

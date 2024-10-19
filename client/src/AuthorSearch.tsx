@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CrossRefResponse, Author as AuthorType } from "./types";
 
-const Author = () => {
+const AuthorSearch = () => {
 	const [authors, setAuthors] = useState<AuthorType[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
@@ -68,4 +68,4 @@ const Author = () => {
 	);
 };
 
-export default Author;
+export default AuthorSearch;
