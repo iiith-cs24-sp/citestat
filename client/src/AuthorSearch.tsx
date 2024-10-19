@@ -43,7 +43,20 @@ const AuthorSearch = () => {
 		if (query) fetchResults();
 	}, [query]);
 
-	if (loading) return <p>Loading...</p>;
+	if (loading)
+		return (
+			<div className="p-8">
+				<h2 className="text-3xl font-medium mb-6">
+					Authors matching "{query}"
+				</h2>
+				<ul className="space-y-4">
+					<li className="skeleton h-16 w-full rounded"></li>
+					<li className="skeleton h-16 w-full rounded"></li>
+					<li className="skeleton h-16 w-full rounded"></li>
+					<li className="skeleton h-16 w-full rounded"></li>
+				</ul>
+			</div>
+		);
 	if (error) return <p>{error}</p>;
 
 	return (
