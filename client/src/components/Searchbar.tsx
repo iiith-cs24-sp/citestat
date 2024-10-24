@@ -5,6 +5,13 @@ interface SearchbarProps {
 	initialQuery: string | null;
 }
 
+/**
+ * Reference: https://www.crossref.org/blog/dois-and-matching-regular-expressions/
+ */
+function isDOI(query: string): boolean {
+	return query.match(/^10\.\d{4,9}\/[-._;()/:A-Z0-9]+$/i) !== null;
+}
+
 const Searchbar: React.FC<SearchbarProps> = ({ initialQuery }) => {
 	const [query, setQuery] = useState<string>(
 		initialQuery ? initialQuery : "",
@@ -13,7 +20,11 @@ const Searchbar: React.FC<SearchbarProps> = ({ initialQuery }) => {
 
 	const handleSearch = () => {
 		if (query.trim()) {
-			navigate(`/search?name=${encodeURIComponent(query)}`);
+			if (isDOI(query)) {
+				navigate(`/doi/${encodeURIComponent(query)}`);
+			} else {
+				navigate(`/search?name=${encodeURIComponent(query)}`);
+			}
 		}
 	};
 
@@ -29,7 +40,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ initialQuery }) => {
 			value={query}
 			onChange={(e) => setQuery(e.target.value)}
 			onKeyDown={handleKeyDown}
-			placeholder="Search for Author"
+			placeholder="Search for Author or DOI"
 			className="input input-bordered w-full text-2xl px-6 py-6 my-4"
 		/>
 	);
