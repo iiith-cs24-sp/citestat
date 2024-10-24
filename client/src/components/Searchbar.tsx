@@ -35,14 +35,17 @@ const Searchbar: React.FC<SearchbarProps> = ({ initialQuery }) => {
 	};
 
 	return (
-		<input
-			type="text"
-			value={query}
-			onChange={(e) => setQuery(e.target.value)}
-			onKeyDown={handleKeyDown}
-			placeholder="Search for Author or DOI"
-			className="input input-bordered w-full text-2xl px-6 py-6 my-4"
-		/>
+		<label className="input input-bordered flex w-full items-center gap-2 text-2xl my-4">
+			<input
+				type="text"
+				value={query}
+				onChange={(e) => setQuery(e.target.value)}
+				onKeyDown={handleKeyDown}
+				placeholder="Search for Author or DOI"
+				className="w-full"
+			/>
+			<button onClick={handleSearch}>🔍</button>
+		</label>
 	);
 };
 
