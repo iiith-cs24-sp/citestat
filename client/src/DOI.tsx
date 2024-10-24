@@ -188,7 +188,12 @@ const DoiView: React.FC<Work> = (work: Work) => {
 			<div>
 				<h3 className="text-xl font-medium mb-2">URL</h3>
 				<p>
-					<a href={work.URL} target="_blank" rel="noreferrer">
+					<a
+						href={work.URL}
+						target="_blank"
+						rel="noreferrer"
+						className="link link-primary"
+					>
 						{work.URL}
 					</a>
 				</p>
@@ -251,7 +256,7 @@ const DOI: React.FC = () => {
 			<Searchbar initialQuery={query} />
 			<h2 className="text-3xl font-medium mb-6">DOI "{query}"</h2>
 			{loading || !data ? (
-				<div className="skeleton h-full w-full rounded"></div>
+				<div className="skeleton h-96 w-full rounded"></div>
 			) : (
 				DoiView(data)
 			)}
