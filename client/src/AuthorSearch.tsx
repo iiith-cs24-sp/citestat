@@ -7,7 +7,7 @@ interface AuthorWithCount extends AuthorType {
 	publicationCount: number;
 }
 
-const AuthorSearch = () => {
+const AuthorSearch: React.FC = () => {
 	const [authors, setAuthors] = useState<AuthorWithCount[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);

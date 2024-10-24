@@ -149,7 +149,7 @@ import { Work } from "./types";
 }
  */
 
-const DoiView = (work: Work) => {
+const DoiView: React.FC<Work> = (work: Work) => {
 	return (
 		<div className="grid grid-cols-2 gap-4">
 			<div>
@@ -204,7 +204,7 @@ const DoiView = (work: Work) => {
 	);
 };
 
-const DOI = () => {
+const DOI: React.FC = () => {
 	const [data, setData] = useState<Work>();
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
@@ -252,4 +252,5 @@ const DOI = () => {
 	);
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export default DOI;
