@@ -7,8 +7,7 @@ export interface Work {
 	DOI: string;
 	title: string[];
 	author: Author[];
-	"published-print"?: { "date-parts": number[][] };
-	URL: string;
+	"is-referenced-by-count": number;
 }
 
 export interface CrossRefResponse {
