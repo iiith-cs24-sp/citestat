@@ -160,7 +160,14 @@ const DoiView: React.FC<Work> = (work: Work) => {
 				<h3 className="text-xl font-medium mb-2">Authors</h3>
 				<ul>
 					{work.author?.map((author) => (
-						<li key={author.family}>
+						<li
+							key={
+								author.sequence +
+								author.given +
+								author.family +
+								author.affiliation
+							}
+						>
 							{author.given} {author.family}
 						</li>
 					))}
