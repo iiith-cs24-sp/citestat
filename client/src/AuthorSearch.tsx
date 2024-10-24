@@ -19,9 +19,9 @@ const AuthorSearch = () => {
 			try {
 				setLoading(true);
 				const response = await fetch(
-					`https://api.crossref.org/works?query.author=${encodeURIComponent(query || "")}&rows=1000&cursor=*&select=title,author,DOI,is-referenced-by-count`,
+					`https://api.crossref.org/works?query.author=${encodeURIComponent(query || "")}&rows=500&cursor=*&select=title,author,DOI,is-referenced-by-count`,
 				);
-				console.log(response)
+				console.log(response);
 				if (!response.ok) throw new Error("Failed to fetch data");
 
 				const data: CrossRefResponse = await response.json();
