@@ -47,7 +47,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ initialQuery }) => {
 				value={query}
 				onChange={(e) => setQuery(e.target.value)}
 				onKeyDown={handleKeyDown}
-				placeholder="Search for Author or DOI"
+				placeholder="Search for ORCID or DOI or Author Name"
 				className="w-full"
 			/>
 			<button onClick={handleSearch}>🔍</button>
