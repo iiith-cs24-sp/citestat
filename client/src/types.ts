@@ -1,4 +1,5 @@
 export interface Author {
+	ORCID?: string;
 	given: string;
 	family: string;
 	sequence: string;

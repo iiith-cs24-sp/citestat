@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from "./Home";
 import AuthorSearch from "./AuthorSearch";
 import DOI from "./DOI";
+import ORCID from "./ORCID";
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 						<Route path="/" element={<Home />} />
 						<Route path="/search" element={<AuthorSearch />} />
 						<Route path="/doi/:doi" element={<DOI />} />
+						<Route path="/author/:orcid" element={<ORCID />} />
 					</Routes>
 				</div>
 			</div>
