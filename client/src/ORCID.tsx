@@ -21,7 +21,7 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 						className="card bg-base-100 w-full shadow-xl"
 						key={work.DOI}
 					>
-						<div className="card-body">
+						<div className="card-body overflow-auto">
 							<p className="text-xl font-medium">{work.title}</p>
 							<p className="text-lg">
 								Publisher: {work.publisher}
