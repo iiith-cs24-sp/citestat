@@ -12,6 +12,26 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 		<div className="mb-8">
 			<h2 className="text-3xl font-medium mb-6">{name}</h2>
 			{orcid && <p className="text-xl mb-4">ORCID: {orcid}</p>}
+			<h3 className="text-2xl font-medium mb-4">Metrics</h3>
+			<div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+				<p className="text-lg">Total Works: {works.length}</p>
+				<p className="text-lg">
+					Total Citations:{" "}
+					{works.reduce(
+						(acc, work) =>
+							acc + (work["is-referenced-by-count"] ?? 0),
+						0,
+					)}
+				</p>
+				<p className="text-lg">
+					H-Index:{" "}
+					{works
+						.map((work) => work["is-referenced-by-count"] ?? 0)
+						.sort((a, b) => b - a)
+						.findIndex((count, index) => count <= index) ?? 0}
+				</p>
+			</div>
+			<h3 className="text-2xl font-medium mb-4">Works</h3>
 			<ul className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
 				{works.map((work) => (
 					<li
@@ -19,9 +39,9 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 						key={work.DOI}
 					>
 						<div className="card-body overflow-auto">
-							<h3 className="text-xl font-medium">
+							<h4 className="text-xl font-medium">
 								{work.title}
-							</h3>
+							</h4>
 							<p className="text-lg flex justify-between">
 								Publisher: {work.publisher}
 								{work.published ? (
