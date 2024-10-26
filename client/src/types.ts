@@ -20,6 +20,12 @@ export interface DateAndVersion {
 	timestamp: number;
 }
 
+export interface Date {
+	"date-parts": number[][];
+	"date-time": string;
+	timestamp: number;
+}
+
 export interface WorkDomain {
 	domain: string[];
 	crossmark_restriction: boolean;
