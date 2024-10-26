@@ -21,7 +21,7 @@ const AuthorPage: React.FC = () => {
 				setLoading(true);
 				// Batch the DOIs into a single request
 				const response = await fetch(
-					`https://api.crossref.org/works?filter=doi:${dois.join(",doi:")}`,
+					`https://api.crossref.org/works?filter=doi:${dois.join(",doi:")}&sort=published&order=desc&rows=1000`,
 				);
 				if (!response.ok)
 					throw new Error(
