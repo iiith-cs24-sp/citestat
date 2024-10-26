@@ -85,6 +85,7 @@ const AuthorSearch: React.FC = () => {
 									)}&doi=${author.publicationDOIs
 										.map(encodeURIComponent)
 										.join("&doi=")}`}
+									className="btn btn-outline btn-sm btn-wide"
 								>
 									{author.publicationCount} Publications
 								</Link>
