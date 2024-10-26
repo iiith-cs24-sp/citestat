@@ -1,4 +1,10 @@
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Route,
+	Routes,
+	Link,
+	Navigate,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import AuthorSearch from "./pages/AuthorSearch";
 import DOI from "./pages/DOI";
@@ -19,6 +25,7 @@ function App() {
 						<Route path="/search" element={<AuthorSearch />} />
 						<Route path="/doi/:doi" element={<DOI />} />
 						<Route path="/author/:orcid" element={<ORCID />} />
+						<Route path="*" element={<Navigate to="/" />} />
 					</Routes>
 				</div>
 			</div>
