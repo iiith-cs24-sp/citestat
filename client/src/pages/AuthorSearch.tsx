@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { CrossRefResponse, Author as AuthorType } from "../types";
 import Searchbar from "../components/Searchbar";
 
 interface AuthorWithCount extends AuthorType {
+	publicationDOIs: string[];
 	publicationCount: number;
 }
 
@@ -25,22 +26,21 @@ const AuthorSearch: React.FC = () => {
 				if (!response.ok) throw new Error("Failed to fetch data");
 
 				const data: CrossRefResponse = await response.json();
-				const allAuthors = data.message.items.flatMap(
-					(work) => work.author || [],
-				);
+				const authorMap: Map<string, AuthorWithCount> = new Map();
 
-				const authorMap = new Map<string, AuthorWithCount>();
-
-				allAuthors.forEach((author) => {
-					const fullName = `${author.given} ${author.family}`;
-					if (authorMap.has(fullName)) {
-						authorMap.get(fullName)!.publicationCount += 1;
-					} else {
-						authorMap.set(fullName, {
+				data.message.items.forEach((item) => {
+					if (!item.author) return;
+					item.author.forEach((author) => {
+						const key = `${author.given} ${author.family}`;
+						const authorWithCount = authorMap.get(key) || {
 							...author,
-							publicationCount: 1,
-						});
-					}
+							publicationDOIs: [],
+							publicationCount: 0,
+						};
+						authorWithCount.publicationDOIs.push(item.DOI);
+						authorWithCount.publicationCount++;
+						authorMap.set(key, authorWithCount);
+					});
 				});
 
 				setAuthors(Array.from(authorMap.values()));
@@ -79,9 +79,11 @@ const AuthorSearch: React.FC = () => {
 								<div className="text-xl">
 									{author.given} {author.family}
 								</div>
-								<div>
+								<Link
+									to={`/author?name=${author.given} ${author.family}&doi=${author.publicationDOIs.join("&doi=")}`}
+								>
 									{author.publicationCount} Publications
-								</div>
+								</Link>
 							</div>
 						</li>
 					))}

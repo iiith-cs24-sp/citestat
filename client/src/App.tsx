@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import AuthorSearch from "./pages/AuthorSearch";
 import DOI from "./pages/DOI";
 import ORCID from "./pages/ORCID";
+import AuthorPage from "./pages/AuthorPage";
 
 function App() {
 	return (
@@ -25,6 +26,7 @@ function App() {
 						<Route path="/search" element={<AuthorSearch />} />
 						<Route path="/doi/:doi" element={<DOI />} />
 						<Route path="/author/:orcid" element={<ORCID />} />
+						<Route path="/author" element={<AuthorPage />} />
 						<Route path="*" element={<Navigate to="/" />} />
 					</Routes>
 				</div>
