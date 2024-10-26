@@ -80,7 +80,11 @@ const AuthorSearch: React.FC = () => {
 									{author.given} {author.family}
 								</div>
 								<Link
-									to={`/author?name=${author.given} ${author.family}&doi=${author.publicationDOIs.join("&doi=")}`}
+									to={`/author?name=${encodeURIComponent(
+										author.given + " " + author.family,
+									)}&doi=${author.publicationDOIs
+										.map(encodeURIComponent)
+										.join("&doi=")}`}
 								>
 									{author.publicationCount} Publications
 								</Link>

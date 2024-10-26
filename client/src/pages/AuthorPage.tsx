@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Searchbar from "../components/Searchbar";
 import { Work } from "../types";
 import AuthorView from "../components/AuthorView";
@@ -10,29 +10,27 @@ const AuthorPage: React.FC = () => {
 	const [error, setError] = useState<string | null>(null);
 	const [searchParams] = useSearchParams();
 	const name: string = searchParams.get("name") as string;
-	const dois: string[] = searchParams.getAll("doi");
+	const dois: string[] = useMemo(
+		() => searchParams.getAll("doi"),
+		[searchParams],
+	); // This is necessary as searchParams is an object that changes on every render.
 
 	useEffect(() => {
 		const fetchResults = async () => {
 			try {
 				setLoading(true);
-				// Fetch each DOI in parallel
-				const fetches = dois.map(async (doi) => {
-					const response = await fetch(
-						`https://api.crossref.org/works/${doi}`,
-					);
-					if (!response.ok)
-						throw new Error(
-							response.status + " " + response.statusText,
-						);
-
-					return response.json();
-				});
-				const responses = await Promise.all(fetches);
-				const works = responses.map(
-					(response) => response.message as Work,
+				// Batch the DOIs into a single request
+				const response = await fetch(
+					`https://api.crossref.org/works?filter=doi:${dois.join(",doi:")}`,
 				);
-				setWorks(works);
+				if (!response.ok)
+					throw new Error(
+						response.status + " " + response.statusText,
+					);
+
+				await response.json().then((res) => {
+					setWorks(res.message.items);
+				});
 			} catch (err) {
 				setError((err as Error).message);
 			} finally {
