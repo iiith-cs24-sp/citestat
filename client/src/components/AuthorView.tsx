@@ -12,7 +12,7 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 		<div className="mb-8">
 			<h2 className="text-3xl font-medium mb-6">{name}</h2>
 			{orcid && <p className="text-xl mb-4">ORCID: {orcid}</p>}
-			<ul className="grid grid-cols-1 gap-4">
+			<ul className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
 				{works.map((work) => (
 					<li
 						className="card bg-base-100 w-full shadow-xl"
