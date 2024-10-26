@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Searchbar from "./components/Searchbar";
-import { Work } from "./types";
+import Searchbar from "../components/Searchbar";
+import { Work } from "../types";
 
 /**
  * Sample Response from the Crossref API for a DOI query

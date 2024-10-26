@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { CrossRefResponse, Author as AuthorType } from "./types";
-import Searchbar from "./components/Searchbar";
+import { CrossRefResponse, Author as AuthorType } from "../types";
+import Searchbar from "../components/Searchbar";
 
 interface AuthorWithCount extends AuthorType {
 	publicationCount: number;

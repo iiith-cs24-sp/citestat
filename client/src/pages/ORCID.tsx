@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Searchbar from "./components/Searchbar";
-import { Author, Work } from "./types";
-import AuthorView from "./components/AuthorView";
+import Searchbar from "../components/Searchbar";
+import { Author, Work } from "../types";
+import AuthorView from "../components/AuthorView";
 
 const ORCID: React.FC = () => {
 	const [authorName, setAuthorName] = useState<string>();

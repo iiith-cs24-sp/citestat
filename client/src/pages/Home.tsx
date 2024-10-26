@@ -1,4 +1,4 @@
-import Searchbar from "./components/Searchbar";
+import Searchbar from "../components/Searchbar";
 
 const Home: React.FC = () => {
 	return (

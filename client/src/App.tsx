@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import Home from "./Home";
-import AuthorSearch from "./AuthorSearch";
-import DOI from "./DOI";
-import ORCID from "./ORCID";
+import Home from "./pages/Home";
+import AuthorSearch from "./pages/AuthorSearch";
+import DOI from "./pages/DOI";
+import ORCID from "./pages/ORCID";
 
 function App() {
 	return (
