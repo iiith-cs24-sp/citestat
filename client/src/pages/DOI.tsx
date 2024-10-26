@@ -175,7 +175,7 @@ const DoiView: React.FC<Work> = (work: Work) => {
 			</div>
 			<div>
 				<h3 className="text-xl font-medium mb-2">Published</h3>
-				<p>{work.published?.["date-parts"].join("/")}</p>
+				<p>{work.published?.["date-parts"].flat().join("/")}</p>
 			</div>
 			<div>
 				<h3 className="text-xl font-medium mb-2">DOI</h3>
