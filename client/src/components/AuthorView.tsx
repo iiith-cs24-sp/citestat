@@ -19,9 +19,19 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 						key={work.DOI}
 					>
 						<div className="card-body overflow-auto">
-							<p className="text-xl font-medium">{work.title}</p>
-							<p className="text-lg">
+							<h3 className="text-xl font-medium">
+								{work.title}
+							</h3>
+							<p className="text-lg flex justify-between">
 								Publisher: {work.publisher}
+								{work.published ? (
+									<span className="ml-4">
+										Published:{" "}
+										{work.published["date-parts"]
+											.flat()
+											.join("/")}
+									</span>
+								) : null}
 							</p>
 							{work["is-referenced-by-count"] ? (
 								<p className="text-lg">
