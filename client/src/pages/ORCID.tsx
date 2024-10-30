@@ -16,7 +16,7 @@ const ORCID: React.FC = () => {
 			try {
 				setLoading(true);
 				const authorFetch = await fetch(
-					`https://api.crossref.org/works?filter=orcid:${orcid}&select=author&rows=1`,
+					`https://api.crossref.org/works?filter=orcid:${orcid}&select=author,editor&rows=1`,
 				);
 				if (!authorFetch.ok)
 					throw new Error(
@@ -26,13 +26,15 @@ const ORCID: React.FC = () => {
 				await authorFetch.json().then((res) => {
 					console.log(res);
 					const work: Work = res.message.items[0];
-					const authors: Author[] = work.author!;
+					const contributors: Author[] = (work.author ?? []).concat(
+						work.editor ?? [],
+					);
 					// Find author name from the list of authors using the ORCID
-					const author: Author = authors.find((author) =>
+					const author: Author = contributors.find((author) =>
 						author.ORCID?.includes(orcid),
 					)!;
-					console.log(author);
-					setAuthorName(author.given + " " + author.family);
+					console.log(contributors);
+					setAuthorName(author?.given + " " + author?.family);
 				});
 
 				const response = await fetch(
@@ -45,8 +47,15 @@ const ORCID: React.FC = () => {
 
 				await response.json().then((res) => {
 					console.log(res);
-					// setWorks(res.message.items.forEach((item: Work) => item));
-					setWorks(res.message.items);
+					setWorks(
+						res.message.items.filter(
+							// Only authors, not editors
+							(item: Work) =>
+								item.author?.find((author) =>
+									author.ORCID?.includes(orcid),
+								) !== undefined,
+						) as Work[],
+					);
 				});
 			} catch (err) {
 				setError((err as Error).message);
