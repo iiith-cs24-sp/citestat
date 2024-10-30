@@ -14,8 +14,11 @@ import AuthorPage from "./pages/AuthorPage";
 function App() {
 	return (
 		<Router>
-			<div className="navbar bg-base-300 justify-evenly">
-				<Link className="btn btn-ghost text-4xl font-medium" to="/">
+			<div className="navbar bg-primary justify-evenly">
+				<Link
+					className="btn btn-ghost text-4xl text-primary-content font-medium"
+					to="/"
+				>
 					Citestat
 				</Link>
 			</div>
