@@ -14,12 +14,12 @@ import AuthorPage from "./pages/AuthorPage";
 function App() {
 	return (
 		<Router>
+			<div className="navbar bg-base-300 justify-evenly">
+				<Link className="btn btn-ghost text-4xl font-medium" to="/">
+					Citestat
+				</Link>
+			</div>
 			<div className="container mx-auto px-4 font-jost">
-				<div className="navbar bg-base-300">
-					<Link className="btn btn-ghost text-4xl font-medium" to="/">
-						Citestat
-					</Link>
-				</div>
 				<div>
 					<Routes>
 						<Route path="/" element={<Home />} />
