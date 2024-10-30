@@ -97,7 +97,7 @@ export interface Work {
 	subtitle?: string;
 	translator?: string;
 	"free-to-read"?: WorkFreeToRead;
-	editor?: string;
+	editor?: Author[];
 	"proceedings-subject"?: string;
 	"component-number"?: string;
 	"short-title"?: string;
