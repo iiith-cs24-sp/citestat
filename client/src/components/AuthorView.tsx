@@ -25,10 +25,13 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 				</p>
 				<p className="text-lg">
 					H-Index:{" "}
-					{works
-						.map((work) => work["is-referenced-by-count"] ?? 0)
-						.sort((a, b) => b - a)
-						.findIndex((count, index) => count <= index) ?? 0}
+					{(() => {
+						const hIndex = works
+							.map((work) => work["is-referenced-by-count"] ?? 0)
+							.sort((a, b) => b - a)
+							.findIndex((count, index) => count <= index);
+						return hIndex === -1 ? works.length : hIndex;
+					})()}
 				</p>
 			</div>
 			<h3 className="text-2xl font-medium mb-4">Works</h3>
