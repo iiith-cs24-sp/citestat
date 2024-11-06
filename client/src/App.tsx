@@ -11,6 +11,12 @@ import DOI from "./pages/DOI";
 import ORCID from "./pages/ORCID";
 import AuthorPage from "./pages/AuthorPage";
 
+
+/**
+ * Main App object
+ */
+
+
 function App() {
 	return (
 		<Router>
