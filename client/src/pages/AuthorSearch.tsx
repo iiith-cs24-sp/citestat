@@ -3,6 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import { CrossRefResponse, Author as AuthorType } from "../types";
 import Searchbar from "../components/Searchbar";
 
+/**
+ * Author with count
+ */
 interface AuthorWithCount extends AuthorType {
 	publicationDOIs: string[];
 	publicationCount: number;
