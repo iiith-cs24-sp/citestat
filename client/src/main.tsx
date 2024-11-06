@@ -3,6 +3,10 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 
+
+/**
+ * Root element in React Dom
+ */
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<App />
