@@ -1,4 +1,8 @@
-# React + TypeScript + Vite
+# Instructions for documentation
+
+# Notes from Crossref api
+
+# Information about project template: React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

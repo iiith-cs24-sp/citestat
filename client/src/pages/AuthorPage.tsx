@@ -4,6 +4,13 @@ import { Work } from "../types";
 import AuthorView from "../components/AuthorView";
 import { useSearchParams } from "react-router-dom";
 
+/**
+ * @param works  : 
+ * @param loading : loading status
+ * @param error: whether there was some error in fetching api results
+ * @param searchParams : search parameters extracted from url 
+ * @returns Author page functional component
+ */
 const AuthorPage: React.FC = () => {
 	const [works, setWorks] = useState<Work[]>();
 	const [loading, setLoading] = useState<boolean>(true);
