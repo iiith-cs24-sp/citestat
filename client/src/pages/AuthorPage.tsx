@@ -5,10 +5,10 @@ import AuthorView from "../components/AuthorView";
 import { useSearchParams } from "react-router-dom";
 
 /**
- *  works  : 
+ *  works  :
  * loading : loading status
  * error: whether there was some error in fetching api results
- *  searchParams : search parameters extracted from url 
+ *  searchParams : search parameters extracted from url
  * @returns Author page functional component
  */
 const AuthorPage: React.FC = () => {
@@ -66,10 +66,10 @@ const AuthorPage: React.FC = () => {
 	);
 };
 /**
- *  works  : 
+ *  works  :
  * loading : loading status
  * error: whether there was some error in fetching api results
- *  searchParams : search parameters extracted from url 
+ *  searchParams : search parameters extracted from url
  * @returns Author page functional component
  */
 export default AuthorPage;
