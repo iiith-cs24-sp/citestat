@@ -4,7 +4,7 @@ import Searchbar from "../components/Searchbar";
 import { Author, Work } from "../types";
 import AuthorView from "../components/AuthorView";
 
-const ORCID: React.FC = () => {
+export const ORCID: React.FC = () => {
 	const [authorName, setAuthorName] = useState<string>();
 	const [works, setWorks] = useState<Work[]>();
 	const [loading, setLoading] = useState<boolean>(true);
