@@ -216,7 +216,7 @@ const DoiView: React.FC<Work> = (work: Work) => {
 	);
 };
 
-const DOI: React.FC = () => {
+export const DOI: React.FC = () => {
 	const [data, setData] = useState<Work>();
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
@@ -265,4 +265,4 @@ const DOI: React.FC = () => {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export default DOI;
+

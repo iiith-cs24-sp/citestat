@@ -11,7 +11,7 @@ import { useSearchParams } from "react-router-dom";
  *  searchParams : search parameters extracted from url
  * @returns Author page functional component
  */
-const AuthorPage: React.FC = () => {
+export const AuthorPage: React.FC = () => {
 	const [works, setWorks] = useState<Work[]>();
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
@@ -65,11 +65,3 @@ const AuthorPage: React.FC = () => {
 		</div>
 	);
 };
-/**
- *  works  :
- * loading : loading status
- * error: whether there was some error in fetching api results
- *  searchParams : search parameters extracted from url
- * @returns Author page functional component
- */
-export default AuthorPage;

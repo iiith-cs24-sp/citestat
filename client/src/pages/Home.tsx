@@ -1,6 +1,6 @@
 import Searchbar from "../components/Searchbar";
 
-const Home: React.FC = () => {
+export const Home: React.FC = () => {
 	return (
 		<div className="hero">
 			<div className="hero-content text-center py-36">
@@ -16,4 +16,4 @@ const Home: React.FC = () => {
 	);
 };
 
-export default Home;
+
