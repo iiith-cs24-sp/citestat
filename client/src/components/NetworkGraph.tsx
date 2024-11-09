@@ -1,5 +1,11 @@
 import React from "react";
-import { GraphCanvas, GraphEdge, GraphNode } from "reagraph";
+import {
+	GraphCanvas,
+	GraphEdge,
+	GraphNode,
+	lightTheme,
+	darkTheme,
+} from "reagraph";
 
 interface GraphExampleProps {
 	width: number | string;
@@ -16,7 +22,18 @@ export const GraphExample: React.FC<GraphExampleProps> = ({
 }) => {
 	return (
 		<div style={{ position: "relative", width: width, height: height }}>
-			<GraphCanvas nodes={nodes} edges={edges} />
+			<GraphCanvas
+				nodes={nodes}
+				edges={edges}
+				cameraMode="pan"
+				theme={
+					getComputedStyle(document.documentElement).getPropertyValue(
+						"color-scheme",
+					) === "dark"
+						? darkTheme
+						: lightTheme
+				}
+			/>
 		</div>
 	);
 };
