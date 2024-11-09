@@ -12,6 +12,7 @@ interface GraphExampleProps {
 	height: number | string;
 	nodes: GraphNode[];
 	edges: GraphEdge[];
+	onNodeClick?: (node: GraphNode) => void;
 }
 
 export const GraphExample: React.FC<GraphExampleProps> = ({
@@ -19,6 +20,7 @@ export const GraphExample: React.FC<GraphExampleProps> = ({
 	height,
 	nodes,
 	edges,
+	onNodeClick,
 }) => {
 	return (
 		<div style={{ position: "relative", width: width, height: height }}>
@@ -26,6 +28,7 @@ export const GraphExample: React.FC<GraphExampleProps> = ({
 				nodes={nodes}
 				edges={edges}
 				cameraMode="pan"
+				onNodeClick={onNodeClick}
 				theme={
 					getComputedStyle(document.documentElement).getPropertyValue(
 						"color-scheme",

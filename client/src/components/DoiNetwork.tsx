@@ -66,6 +66,10 @@ export const DoiNetwork: React.FC<string> = (doi: string) => {
 					height={graphHeight}
 					nodes={nodes}
 					edges={edges}
+					onNodeClick={(node) => {
+						// Visit the DOI page
+						window.location.href = `/doi/${encodeURIComponent(node.id)}`;
+					}}
 				/>
 			) : (
 				<div className="skeleton h-96 w-full rounded"></div>
