@@ -58,6 +58,7 @@ export interface Work {
 	"edition-number"?: string;
 	"group-title"?: string;
 	"reference-count"?: number;
+	reference?: Work[];
 	publisher: string;
 	issue?: string;
 	"isbn-type"?: string;

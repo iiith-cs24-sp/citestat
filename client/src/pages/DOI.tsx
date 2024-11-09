@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Searchbar from "../components/Searchbar";
 import { Work } from "../types";
+import { DoiNetwork } from "../components/DoiNetwork";
 
 /**
  * Sample Response from the Crossref API for a DOI query
@@ -260,9 +261,7 @@ export const DOI: React.FC = () => {
 			) : (
 				DoiView(data)
 			)}
+			{DoiNetwork(query)}
 		</div>
 	);
 };
-
-// eslint-disable-next-line react-refresh/only-export-components
-
