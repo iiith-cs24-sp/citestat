@@ -9,6 +9,8 @@ import { GraphEdge, GraphNode } from "reagraph";
  */
 export const DoiNetwork: React.FC<string> = (doi: string) => {
 	const [work, setWork] = useState<Work | null>(null);
+	const [nodes, setNodes] = useState<GraphNode[]>([]);
+	const [edges, setEdges] = useState<GraphEdge[]>([]);
 
 	useEffect(() => {
 		fetch(`https://api.crossref.org/works/${doi}`)
@@ -18,28 +20,42 @@ export const DoiNetwork: React.FC<string> = (doi: string) => {
 			});
 	}, [doi]);
 
+	useEffect(() => {
+		if (!work || !work.reference) return;
+
+		const validReferences = work.reference
+			.filter((ref) => ref.DOI)
+			// remove duplicates
+			.filter(
+				(ref, index, self) =>
+					self.findIndex((r) => r.DOI === ref.DOI) === index,
+			);
+		console.dir(validReferences);
+
+		const newNodes: GraphNode[] = [
+			{
+				id: work.DOI,
+				label: work.title,
+			},
+			...validReferences.map((ref) => ({
+				id: ref.DOI,
+				label: ref.DOI,
+			})),
+		];
+
+		const newEdges: GraphEdge[] = validReferences.map((ref) => ({
+			source: ref.DOI,
+			target: work.DOI,
+			id: `${ref.DOI}-${work.DOI}`,
+			label: `${ref.DOI}->${work.DOI}`,
+		}));
+
+		setNodes(newNodes);
+		setEdges(newEdges);
+	}, [work]);
+
 	const graphWidth = "100%";
-	const graphHeight = 360;
-
-	const nodes: GraphNode[] = [
-		{
-			id: "1",
-			label: "1",
-		},
-		{
-			id: "2",
-			label: "2",
-		},
-	];
-
-	const edges: GraphEdge[] = [
-		{
-			source: "1",
-			target: "2",
-			id: "1-2",
-			label: "1-2",
-		},
-	];
+	const graphHeight = 720;
 
 	return (
 		<div>
