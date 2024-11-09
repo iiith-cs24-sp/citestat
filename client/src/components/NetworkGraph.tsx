@@ -1,17 +1,6 @@
 import React from "react";
-import { GraphCanvas } from "reagraph";
+import { GraphCanvas, GraphEdge, GraphNode } from "reagraph";
 
-export interface GraphNode {
-	id: string;
-	label: string;
-}
-
-export interface GraphEdge {
-	source: string;
-	target: string;
-	id: string;
-	label: string;
-}
 interface GraphExampleProps {
 	width: number | string;
 	height: number | string;

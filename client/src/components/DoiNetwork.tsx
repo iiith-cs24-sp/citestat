@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Work } from "../types";
 import { GraphExample } from "./NetworkGraph";
+import { GraphEdge, GraphNode } from "reagraph";
 
 /**
  * DOI page component that shows the works associated with a DOI
@@ -20,7 +21,7 @@ export const DoiNetwork: React.FC<string> = (doi: string) => {
 	const graphWidth = "100%";
 	const graphHeight = 360;
 
-	const nodes = [
+	const nodes: GraphNode[] = [
 		{
 			id: "1",
 			label: "1",
@@ -31,7 +32,7 @@ export const DoiNetwork: React.FC<string> = (doi: string) => {
 		},
 	];
 
-	const edges = [
+	const edges: GraphEdge[] = [
 		{
 			source: "1",
 			target: "2",
