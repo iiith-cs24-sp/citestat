@@ -10,7 +10,8 @@ import {AuthorSearch} from "./pages/AuthorSearch";
 import {DOI} from "./pages/DOI";
 import {ORCID} from "./pages/ORCID";
 import {AuthorPage} from "./pages/AuthorPage";
-import {SampleChartParent} from "./pages/SampleChart";
+//import {SampleChartParent} from "./pages/YearCitationChart";
+import { YearCitationChart } from "./pages/YearCitationChart";
 
 /**
  * Main App object
@@ -36,7 +37,7 @@ function App() {
 						<Route path="/author/:orcid" element={<ORCID />} />
 						<Route path="/author" element={<AuthorPage />} />
 						<Route path="*" element={<Navigate to="/" />} />
-						<Route path="/sample" element= {<SampleChartParent data={"10.1002/adfm.201505328"}/>}/>
+						<Route path="/sample" element= {<YearCitationChart data={"10.1002/adfm.201505328"}/>}/>
 					</Routes>
 				</div>
 			</div>
