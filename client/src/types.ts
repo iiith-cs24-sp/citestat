@@ -126,3 +126,33 @@ export interface CrossRefResponse {
 		items: Work[];
 	};
 }
+
+/**
+* for parsing citations query from opencitations api 
+* Sample 
+* 
+        "timespan": "P0Y11M",
+        "oci": "06101335997-06180294718",
+        "journal_sc": "no",
+        "cited": "10.3389/fimmu.2020.602256",
+        "creation": "2021-12",
+        "author_sc": "no",
+        "citing": "10.1016/j.isci.2021.103478"
+ */
+export interface Citation
+{
+	"timespan": string;
+	"oci": string;
+	"journal_sc": string;
+	cited: string;
+	creation: string;
+	"author_sc":string;
+	"citing":string;
+
+}
+
+export interface OpencitationsResponse
+{
+	items: Citation[];
+	
+}

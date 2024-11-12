@@ -4,7 +4,7 @@ import Searchbar from "../components/Searchbar";
 import { Work } from "../types";
 
 /**
- * Sample Response from the Crossref API for a DOI query
+ * Sample Response from the Crossref API for a DOI query : api.crossref.org/works/{doi}
 {
     "status": "ok",
     "message-type": "work",

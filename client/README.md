@@ -1,9 +1,33 @@
 # Instructions for documentation
 
 # Notes from Crossref api
-
+  
 
 # Information about project template: React + TypeScript + Vite
+
+# Helpful reference resources
+
+## D3.js
+  https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js
+  https://2019.wattenberger.com/blog/react-and-d3
+
+  Guide to using D3 force
+  https://medium.com/@qdangdo/visualizing-connections-a-guide-to-react-d3-force-graphs-typescript-74b7af728c90
+
+## Crossref API
+  https://www.crossref.org/documentation/retrieve-metadata/rest-api/a-non-technical-introduction-to-our-api/ 
+
+## Opencitations for getting citations yearwise
+
+  https://opencitations.net/index/coci/api/v1/citations/10.3389/fimmu.2020.602256
+
+  https://opencitations.net/index/coci/api/v1#/citations/%7Bdoi%7D
+
+## Standard documentation pages :
+  https://reactrouter.com/en/main 
+  https://mongoosejs.com/docs/ , 
+  https://expressjs.com/en/4x/api.html ,
+  https://react.dev/reference/react Video 
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
