@@ -53,9 +53,11 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 	const [references, setReferences] = useState<Citation[][] | null>(null);
 	const [nodes, setNodes] = useState<GraphNode[]>([]);
 	const [edges, setEdges] = useState<GraphEdge[]>([]);
+	const [loading, setLoading] = useState<boolean>(true);
 
 	// Fetch citation and reference data
 	useEffect(() => {
+		setLoading(true);
 		const fetchCitations = async (doi: string) => {
 			const res = await fetch(
 				`https://opencitations.net/index/api/v2/citations/doi:${doi}`,
@@ -134,6 +136,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 
 			setCitations(citationLevels);
 			setReferences(referenceLevels);
+			setLoading(false);
 		};
 
 		fetchData().catch((err) => {
@@ -272,8 +275,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 
 	return (
 		<div>
-			<h3 className="text-2xl font-medium m-6">Network Graph</h3>
-			{citations ? (
+			{!loading ? (
 				<GraphExample
 					width={graphWidth}
 					height={graphHeight}
