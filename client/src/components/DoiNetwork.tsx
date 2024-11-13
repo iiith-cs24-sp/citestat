@@ -75,21 +75,61 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 		const fetchData = async () => {
 			const citationLevels: Citation[][] = [];
 			const referenceLevels: Citation[][] = [];
-			let currentDoi = doi;
+			// Put dois for current level in an array
+			let citationDois: string[] = [doi];
+			let nextLevelCitationDois: string[] = [];
+			let referenceDois: string[] = [doi];
+			let nextLevelReferenceDois: string[] = [];
 
+			// Loop through the levels
 			for (let i = 0; i < n; i++) {
-				const citations = await fetchCitations(currentDoi);
-				const references = await fetchReferences(currentDoi);
-				citationLevels.push(citations);
-				referenceLevels.push(references);
+				const citationLevel: Citation[] = [];
+				const referenceLevel: Citation[] = [];
 
-				if (citations.length > 0) {
-					currentDoi =
-						citations[0].citing
-							.split(" ")
-							.find((ref) => ref.startsWith("doi:"))
-							?.slice(4) || "";
+				// Loop through the dois in the queue
+				for (const citationDoi of citationDois) {
+					const citations = await fetchCitations(citationDoi);
+					citationLevel.push(...citations);
+					citations.forEach((citation) => {
+						const citingDoi =
+							citation.citing
+								.split(" ")
+								.find((ref) => ref.startsWith("doi:"))
+								?.slice(4) || "";
+						if (
+							citingDoi &&
+							!nextLevelCitationDois.includes(citingDoi)
+						) {
+							nextLevelCitationDois.push(citingDoi);
+						}
+					});
 				}
+				citationDois = nextLevelCitationDois;
+				nextLevelCitationDois = [];
+
+				// Loop through the dois in the queue
+				for (const referenceDoi of referenceDois) {
+					const references = await fetchReferences(referenceDoi);
+					referenceLevel.push(...references);
+					references.forEach((reference) => {
+						const citedDoi =
+							reference.cited
+								.split(" ")
+								.find((ref) => ref.startsWith("doi:"))
+								?.slice(4) || "";
+						if (
+							citedDoi &&
+							!nextLevelReferenceDois.includes(citedDoi)
+						) {
+							nextLevelReferenceDois.push(citedDoi);
+						}
+					});
+				}
+				referenceDois = nextLevelReferenceDois;
+				nextLevelReferenceDois = [];
+
+				citationLevels.push(citationLevel);
+				referenceLevels.push(referenceLevel);
 			}
 
 			setCitations(citationLevels);
