@@ -5,6 +5,8 @@ import {
 	GraphNode,
 	lightTheme,
 	darkTheme,
+	recommendLayout,
+	LayoutTypes,
 } from "reagraph";
 
 interface GraphExampleProps {
@@ -22,11 +24,15 @@ export const GraphExample: React.FC<GraphExampleProps> = ({
 	edges,
 	onNodeClick,
 }) => {
+	const layout: LayoutTypes = recommendLayout(nodes, edges);
+	console.log(layout);
+
 	return (
 		<div style={{ position: "relative", width: width, height: height }}>
 			<GraphCanvas
 				nodes={nodes}
 				edges={edges}
+				layoutType={layout}
 				cameraMode="pan"
 				onNodeClick={onNodeClick}
 				theme={
