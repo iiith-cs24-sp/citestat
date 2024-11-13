@@ -33,6 +33,7 @@ export const GraphExample: React.FC<GraphExampleProps> = ({
 				nodes={nodes}
 				edges={edges}
 				layoutType={layout}
+				sizingType="centrality"
 				cameraMode="pan"
 				onNodeClick={onNodeClick}
 				theme={
