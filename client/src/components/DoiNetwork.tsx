@@ -85,14 +85,20 @@ export const DoiNetwork: React.FC<string> = (doi: string) => {
 			{
 				id: doi,
 				label: doi,
+				fill: "#00ff00",
+				size: 5,
 			},
 			...Array.from(validCitations).map((citer) => ({
 				id: citer,
 				label: citer,
+				fill: "#ff0000",
+				size: 5 / validCitations.size + 1,
 			})),
 			...Array.from(validReferences).map((ref) => ({
 				id: ref,
 				label: ref,
+				fill: "#0000ff",
+				size: 5 / validReferences.size + 1,
 			})),
 		];
 
@@ -129,8 +135,9 @@ export const DoiNetwork: React.FC<string> = (doi: string) => {
 					nodes={nodes}
 					edges={edges}
 					onNodeClick={(node) => {
-						// Visit the DOI page
-						window.location.href = `/doi/${encodeURIComponent(node.id)}`;
+						// Visit the DOI page if not the current DOI
+						if (node.id !== doi)
+							window.location.href = `/doi/${encodeURIComponent(node.id)}`;
 					}}
 				/>
 			) : (
