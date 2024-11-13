@@ -26,96 +26,200 @@ interface Citation {
 }
 
 /**
+ * Generate a colour based on a number, e.g., -2, -1, 0, 1, 2, 3, ...
+ * @param num Number to generate a colour from
+ * @param isDarkMode Whether the colour should be generated for dark mode
+ * @returns Colour string
+ */
+const colourFromNumber = (num: number, isDarkMode: boolean = false): string => {
+	const hue = ((num + 4) / 9.0) * 359;
+	const saturation = 100;
+	const lightness = isDarkMode ? 60 : 40;
+	const colorString = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+	return colorString;
+};
+
+/**
  * DOI page component that shows the works associated with a DOI
  * @returns JSX.Element
  */
-export const DoiNetwork: React.FC<string> = (doi: string) => {
-	const [citations, setCitations] = useState<Citation[] | null>(null);
-	const [references, setReferences] = useState<Citation[] | null>(null);
+interface DoiNetworkProps {
+	doi: string;
+	n: number;
+}
+
+export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
+	const [citations, setCitations] = useState<Citation[][] | null>(null);
+	const [references, setReferences] = useState<Citation[][] | null>(null);
 	const [nodes, setNodes] = useState<GraphNode[]>([]);
 	const [edges, setEdges] = useState<GraphEdge[]>([]);
 
+	// Fetch citation and reference data
 	useEffect(() => {
-		fetch(`https://opencitations.net/index/api/v2/citations/doi:${doi}`)
-			.then((res) => res.json())
-			.then((data) => {
-				setCitations(data as Citation[]);
-			})
-			.catch((err) => {
-				console.error(`Failed to fetch citations: ${err}`);
-			});
-		fetch(`https://opencitations.net/index/api/v2/references/doi:${doi}`)
-			.then((res) => res.json())
-			.then((data) => {
-				setReferences(data as Citation[]);
-			})
-			.catch((err) => {
-				console.error(`Failed to fetch references: ${err}`);
-			});
-	}, [doi]);
+		const fetchCitations = async (doi: string) => {
+			const res = await fetch(
+				`https://opencitations.net/index/api/v2/citations/doi:${doi}`,
+			);
+			const data = await res.json();
+			return data as Citation[];
+		};
 
+		const fetchReferences = async (doi: string) => {
+			const res = await fetch(
+				`https://opencitations.net/index/api/v2/references/doi:${doi}`,
+			);
+			const data = await res.json();
+			return data as Citation[];
+		};
+
+		const fetchData = async () => {
+			let citationLevels: Citation[][] = [];
+			let referenceLevels: Citation[][] = [];
+			let currentDoi = doi;
+
+			for (let i = 0; i < n; i++) {
+				const citations = await fetchCitations(currentDoi);
+				const references = await fetchReferences(currentDoi);
+				citationLevels.push(citations);
+				referenceLevels.push(references);
+
+				if (citations.length > 0) {
+					currentDoi =
+						citations[0].citing
+							.split(" ")
+							.find((ref) => ref.startsWith("doi:"))
+							?.slice(4) || "";
+				}
+			}
+
+			setCitations(citationLevels);
+			setReferences(referenceLevels);
+		};
+
+		fetchData().catch((err) => {
+			console.error(`Failed to fetch data: ${err}`);
+		});
+	}, [doi, n]);
+
+	// Update graph nodes and edges
 	useEffect(() => {
 		if (!citations || !references) return;
 
-		const validCitations: Set<string> = new Set(
-			citations
-				.map((citation) =>
-					citation.citing
-						.split(" ")
-						.filter((ref) => ref.startsWith("doi:"))
-						.map((ref) => ref.slice(4)),
-				)
-				.flat(),
-		);
-		console.dir(validCitations);
+		const validNodes: Set<string> = new Set();
+		const validEdges: Set<string> = new Set();
+		const newNodes: Set<GraphNode> = new Set();
+		const newEdges: GraphEdge[] = [];
+		const isDarkMode =
+			getComputedStyle(document.documentElement).getPropertyValue(
+				"color-scheme",
+			) === "dark";
 
-		const validReferences: Set<string> = new Set(
-			references
-				.map((reference) =>
-					reference.cited
-						.split(" ")
-						.filter((ref) => ref.startsWith("doi:"))
-						.map((ref) => ref.slice(4)),
-				)
-				.flat(),
-		);
-		console.dir(validReferences);
+		console.dir(citations);
+		console.dir(references);
 
-		const newNodes: GraphNode[] = [
-			{
+		if (!validNodes.has(doi)) {
+			newNodes.add({
 				id: doi,
 				label: doi,
-				fill: "#00ff00",
-			},
-			...Array.from(validCitations).map((citer) => ({
-				id: citer,
-				label: citer,
-				fill: "#ff0000",
-			})),
-			...Array.from(validReferences).map((ref) => ({
-				id: ref,
-				label: ref,
-				fill: "#0000ff",
-			})),
-		];
+				fill: isDarkMode ? "#ffffff" : "#000000",
+				size: 10,
+			});
+			validNodes.add(doi);
+		}
 
-		const newEdges: GraphEdge[] = Array.from(validCitations)
-			.map((citer) => ({
-				source: doi,
-				target: citer,
-				id: `${doi}-${citer}`,
-				label: `${doi}->${citer}`,
-			}))
-			.concat(
-				Array.from(validReferences).map((ref) => ({
-					source: ref,
-					target: doi,
-					id: `${ref}-${doi}`,
-					label: `${ref}->${doi}`,
-				})),
-			);
+		citations.forEach((citationLevel, level) => {
+			++level;
+			citationLevel.forEach((citation) => {
+				const citingDoi =
+					citation.citing
+						.split(" ")
+						.find((ref) => ref.startsWith("doi:"))
+						?.slice(4) || "";
+				const citedDoi =
+					citation.cited
+						.split(" ")
+						.find((ref) => ref.startsWith("doi:"))
+						?.slice(4) || "";
 
-		setNodes(newNodes);
+				if (citingDoi && citedDoi) {
+					if (!validNodes.has(citingDoi)) {
+						newNodes.add({
+							id: citingDoi,
+							label: citingDoi,
+							fill: colourFromNumber(level),
+						});
+						validNodes.add(citingDoi);
+					}
+					if (!validNodes.has(citedDoi)) {
+						newNodes.add({
+							id: citedDoi,
+							label: citedDoi,
+							fill: colourFromNumber(level),
+						});
+						validNodes.add(citedDoi);
+					}
+
+					if (!validEdges.has(`${citedDoi}-${citingDoi}`)) {
+						newEdges.push({
+							source: citedDoi,
+							target: citingDoi,
+							id: `${citedDoi}-${citingDoi}`,
+							label: `${citedDoi}->${citingDoi}`,
+							fill: "#ffff00",
+						});
+						validEdges.add(`${citedDoi}-${citingDoi}`);
+					}
+				}
+			});
+		});
+
+		references.forEach((referenceLevel, level) => {
+			++level;
+			referenceLevel.forEach((reference) => {
+				const citingDoi =
+					reference.citing
+						.split(" ")
+						.find((ref) => ref.startsWith("doi:"))
+						?.slice(4) || "";
+				const citedDoi =
+					reference.cited
+						.split(" ")
+						.find((ref) => ref.startsWith("doi:"))
+						?.slice(4) || "";
+
+				if (citingDoi && citedDoi) {
+					if (!validNodes.has(citingDoi)) {
+						newNodes.add({
+							id: citingDoi,
+							label: citingDoi,
+							fill: colourFromNumber(-level),
+						});
+						validNodes.add(citingDoi);
+					}
+					if (!validNodes.has(citedDoi)) {
+						newNodes.add({
+							id: citedDoi,
+							label: citedDoi,
+							fill: colourFromNumber(-level),
+						});
+						validNodes.add(citedDoi);
+					}
+
+					if (!validEdges.has(`${citedDoi}-${citingDoi}`)) {
+						newEdges.push({
+							source: citedDoi,
+							target: citingDoi,
+							id: `${citedDoi}-${citingDoi}`,
+							label: `${citedDoi}->${citingDoi}`,
+							fill: "#ff0000",
+						});
+						validEdges.add(`${citedDoi}-${citingDoi}`);
+					}
+				}
+			});
+		});
+
+		setNodes(Array.from(newNodes));
 		setEdges(newEdges);
 	}, [doi, citations, references]);
 
@@ -132,7 +236,6 @@ export const DoiNetwork: React.FC<string> = (doi: string) => {
 					nodes={nodes}
 					edges={edges}
 					onNodeClick={(node) => {
-						// Visit the DOI page if not the current DOI
 						if (node.id !== doi)
 							window.location.href = `/doi/${encodeURIComponent(node.id)}`;
 					}}

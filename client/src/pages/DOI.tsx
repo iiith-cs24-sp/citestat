@@ -261,7 +261,7 @@ export const DOI: React.FC = () => {
 			) : (
 				DoiView(data)
 			)}
-			{DoiNetwork(query)}
+			<DoiNetwork doi={query} n={2} />
 		</div>
 	);
 };
