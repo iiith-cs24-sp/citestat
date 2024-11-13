@@ -48,6 +48,33 @@ interface DoiNetworkProps {
 	n: number;
 }
 
+const citationRequestCache = new Map<string, Citation[]>();
+const referenceRequestCache = new Map<string, Citation[]>();
+
+async function fetchCitations(doi: string) {
+	if (citationRequestCache.has(doi)) {
+		return citationRequestCache.get(doi)!;
+	}
+	const res = await fetch(
+		`https://opencitations.net/index/api/v2/citations/doi:${doi}`,
+	);
+	const data = await res.json();
+	citationRequestCache.set(doi, data);
+	return data as Citation[];
+}
+
+async function fetchReferences(doi: string) {
+	if (referenceRequestCache.has(doi)) {
+		return referenceRequestCache.get(doi)!;
+	}
+	const res = await fetch(
+		`https://opencitations.net/index/api/v2/references/doi:${doi}`,
+	);
+	const data = await res.json();
+	referenceRequestCache.set(doi, data);
+	return data as Citation[];
+}
+
 export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 	const [citations, setCitations] = useState<Citation[][] | null>(null);
 	const [references, setReferences] = useState<Citation[][] | null>(null);
@@ -58,22 +85,6 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 	// Fetch citation and reference data
 	useEffect(() => {
 		setLoading(true);
-		const fetchCitations = async (doi: string) => {
-			const res = await fetch(
-				`https://opencitations.net/index/api/v2/citations/doi:${doi}`,
-			);
-			const data = await res.json();
-			return data as Citation[];
-		};
-
-		const fetchReferences = async (doi: string) => {
-			const res = await fetch(
-				`https://opencitations.net/index/api/v2/references/doi:${doi}`,
-			);
-			const data = await res.json();
-			return data as Citation[];
-		};
-
 		const fetchData = async () => {
 			const citationLevels: Citation[][] = [];
 			const referenceLevels: Citation[][] = [];
