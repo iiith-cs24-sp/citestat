@@ -32,9 +32,9 @@ interface Citation {
  * @returns Colour string
  */
 const colourFromNumber = (num: number, isDarkMode: boolean = false): string => {
-	const hue = ((num + 4) / 9.0) * 359;
+	const hue = ((num + 3) / 7.0) * 359;
 	const saturation = 100;
-	const lightness = isDarkMode ? 60 : 40;
+	const lightness = isDarkMode ? 60 : 30;
 	const colorString = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 	return colorString;
 };
@@ -207,7 +207,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 							target: citingDoi,
 							id: `${citedDoi}-${citingDoi}`,
 							label: `${citedDoi}->${citingDoi}`,
-							fill: "#ffff00",
+							fill: colourFromNumber(3, isDarkMode),
 						});
 						validEdgeIDs.add(`${citedDoi}-${citingDoi}`);
 					}
@@ -253,7 +253,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 							target: citingDoi,
 							id: `${citedDoi}-${citingDoi}`,
 							label: `${citedDoi}->${citingDoi}`,
-							fill: "#ff0000",
+							fill: colourFromNumber(0, isDarkMode),
 						});
 						validEdgeIDs.add(`${citedDoi}-${citingDoi}`);
 					}
