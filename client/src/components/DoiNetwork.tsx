@@ -73,8 +73,8 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 		};
 
 		const fetchData = async () => {
-			let citationLevels: Citation[][] = [];
-			let referenceLevels: Citation[][] = [];
+			const citationLevels: Citation[][] = [];
+			const referenceLevels: Citation[][] = [];
 			let currentDoi = doi;
 
 			for (let i = 0; i < n; i++) {
@@ -105,8 +105,8 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 	useEffect(() => {
 		if (!citations || !references) return;
 
-		const validNodes: Set<string> = new Set();
-		const validEdges: Set<string> = new Set();
+		const validDOIs: Set<string> = new Set();
+		const validEdgeIDs: Set<string> = new Set();
 		const newNodes: Set<GraphNode> = new Set();
 		const newEdges: GraphEdge[] = [];
 		const isDarkMode =
@@ -114,21 +114,23 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 				"color-scheme",
 			) === "dark";
 
+		console.log("citations");
 		console.dir(citations);
+		console.log("references");
 		console.dir(references);
 
-		if (!validNodes.has(doi)) {
+		if (!validDOIs.has(doi)) {
 			newNodes.add({
 				id: doi,
 				label: doi,
 				fill: isDarkMode ? "#ffffff" : "#000000",
 				size: 10,
 			});
-			validNodes.add(doi);
+			validDOIs.add(doi);
 		}
 
 		citations.forEach((citationLevel, level) => {
-			++level;
+			const fillColour = colourFromNumber(level + 1, isDarkMode);
 			citationLevel.forEach((citation) => {
 				const citingDoi =
 					citation.citing
@@ -142,24 +144,24 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 						?.slice(4) || "";
 
 				if (citingDoi && citedDoi) {
-					if (!validNodes.has(citingDoi)) {
+					if (!validDOIs.has(citingDoi)) {
 						newNodes.add({
 							id: citingDoi,
 							label: citingDoi,
-							fill: colourFromNumber(level),
+							fill: fillColour,
 						});
-						validNodes.add(citingDoi);
+						validDOIs.add(citingDoi);
 					}
-					if (!validNodes.has(citedDoi)) {
+					if (!validDOIs.has(citedDoi)) {
 						newNodes.add({
 							id: citedDoi,
 							label: citedDoi,
-							fill: colourFromNumber(level),
+							fill: fillColour,
 						});
-						validNodes.add(citedDoi);
+						validDOIs.add(citedDoi);
 					}
 
-					if (!validEdges.has(`${citedDoi}-${citingDoi}`)) {
+					if (!validEdgeIDs.has(`${citedDoi}-${citingDoi}`)) {
 						newEdges.push({
 							source: citedDoi,
 							target: citingDoi,
@@ -167,14 +169,14 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 							label: `${citedDoi}->${citingDoi}`,
 							fill: "#ffff00",
 						});
-						validEdges.add(`${citedDoi}-${citingDoi}`);
+						validEdgeIDs.add(`${citedDoi}-${citingDoi}`);
 					}
 				}
 			});
 		});
 
 		references.forEach((referenceLevel, level) => {
-			++level;
+			const fillColour = colourFromNumber(-(level + 1), isDarkMode);
 			referenceLevel.forEach((reference) => {
 				const citingDoi =
 					reference.citing
@@ -188,24 +190,24 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 						?.slice(4) || "";
 
 				if (citingDoi && citedDoi) {
-					if (!validNodes.has(citingDoi)) {
+					if (!validDOIs.has(citingDoi)) {
 						newNodes.add({
 							id: citingDoi,
 							label: citingDoi,
-							fill: colourFromNumber(-level),
+							fill: fillColour,
 						});
-						validNodes.add(citingDoi);
+						validDOIs.add(citingDoi);
 					}
-					if (!validNodes.has(citedDoi)) {
+					if (!validDOIs.has(citedDoi)) {
 						newNodes.add({
 							id: citedDoi,
 							label: citedDoi,
-							fill: colourFromNumber(-level),
+							fill: fillColour,
 						});
-						validNodes.add(citedDoi);
+						validDOIs.add(citedDoi);
 					}
 
-					if (!validEdges.has(`${citedDoi}-${citingDoi}`)) {
+					if (!validEdgeIDs.has(`${citedDoi}-${citingDoi}`)) {
 						newEdges.push({
 							source: citedDoi,
 							target: citingDoi,
@@ -213,12 +215,14 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 							label: `${citedDoi}->${citingDoi}`,
 							fill: "#ff0000",
 						});
-						validEdges.add(`${citedDoi}-${citingDoi}`);
+						validEdgeIDs.add(`${citedDoi}-${citingDoi}`);
 					}
 				}
 			});
 		});
 
+		console.dir(newNodes);
+		console.dir(newEdges);
 		setNodes(Array.from(newNodes));
 		setEdges(newEdges);
 	}, [doi, citations, references]);
