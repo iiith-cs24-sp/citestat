@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, forwardRef } from "react";
 import {
 	GraphCanvas,
 	GraphCanvasRef,
@@ -8,7 +8,46 @@ import {
 	darkTheme,
 	recommendLayout,
 	LayoutTypes,
+	CameraMode,
 } from "reagraph";
+
+interface GraphControlsProps {
+	setCameraMode: React.Dispatch<React.SetStateAction<CameraMode>>;
+}
+
+const GraphControls = forwardRef<GraphCanvasRef, GraphControlsProps>(
+	(props, ref) => {
+		return (
+			<div className="flex flex-row justify-between items-center">
+				<button
+					onClick={() => {
+						const data = (
+							ref as React.RefObject<GraphCanvasRef>
+						).current?.exportCanvas();
+						const link = document.createElement("a");
+						link.setAttribute("href", data ?? "");
+						link.setAttribute("target", "_blank");
+						link.setAttribute("download", "network_graph.png");
+						link.click();
+					}}
+					className="btn btn-outline btn-neutral z-50 relative m-1"
+				>
+					Save as Image
+				</button>
+				<select
+					className="select select-bordered select-ghost z-50 relative m-1"
+					onChange={(e) => {
+						props.setCameraMode(e.target.value as CameraMode);
+					}}
+				>
+					<option value="pan">Pan</option>
+					<option value="rotate">Rotate</option>
+					<option value="orbit">Orbit</option>
+				</select>
+			</div>
+		);
+	},
+);
 
 interface NetworkGraphProps {
 	width: number | string;
@@ -28,30 +67,18 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({
 	const ref = useRef<GraphCanvasRef | null>(null);
 	const layout: LayoutTypes = recommendLayout(nodes, edges);
 	console.log(layout);
+	const [cameraMode, setCameraMode] = React.useState<CameraMode>("pan");
 
 	return (
 		<div style={{ position: "relative", width: width, height: height }}>
-			<button
-				onClick={() => {
-					const data = ref.current?.exportCanvas();
-
-					const link = document.createElement("a");
-					link.setAttribute("href", data ?? "");
-					link.setAttribute("target", "_blank");
-					link.setAttribute("download", "network_graph.png");
-					link.click();
-				}}
-				className="btn btn-outline btn-neutral z-50 relative m-1"
-			>
-				Save as Image
-			</button>
+			<GraphControls setCameraMode={setCameraMode} ref={ref} />
 			<GraphCanvas
 				ref={ref}
 				nodes={nodes}
 				edges={edges}
 				layoutType={layout}
 				sizingType="centrality"
-				cameraMode="pan"
+				cameraMode={cameraMode}
 				onNodeClick={onNodeClick}
 				theme={
 					getComputedStyle(document.documentElement).getPropertyValue(
