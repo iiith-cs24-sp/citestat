@@ -81,10 +81,15 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 	const [nodes, setNodes] = useState<GraphNode[]>([]);
 	const [edges, setEdges] = useState<GraphEdge[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
+	const [stage, setStage] = useState<number>(0);
+	const [stageProgress, setStageProgress] = useState<number>(0);
 
 	// Fetch citation and reference data
 	useEffect(() => {
 		setLoading(true);
+		setStage(0);
+		setStageProgress(0);
+
 		const fetchData = async () => {
 			const citationLevels: Citation[][] = [];
 			const referenceLevels: Citation[][] = [];
@@ -96,6 +101,9 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 
 			// Loop through the levels
 			for (let i = 0; i < n; i++) {
+				setStage(i);
+				setStageProgress(0);
+				let progress = 0;
 				const citationLevel: Citation[] = [];
 				const referenceLevel: Citation[] = [];
 
@@ -116,9 +124,12 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 							nextLevelCitationDois.push(citingDoi);
 						}
 					});
+					++progress;
+					setStageProgress(
+						(progress * 100.0) /
+							(citationDois.length + referenceDois.length),
+					);
 				}
-				citationDois = nextLevelCitationDois;
-				nextLevelCitationDois = [];
 
 				// Loop through the dois in the queue
 				for (const referenceDoi of referenceDois) {
@@ -137,7 +148,15 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 							nextLevelReferenceDois.push(citedDoi);
 						}
 					});
+					++progress;
+					setStageProgress(
+						(progress * 100.0) /
+							(citationDois.length + referenceDois.length),
+					);
 				}
+
+				citationDois = nextLevelCitationDois;
+				nextLevelCitationDois = [];
 				referenceDois = nextLevelReferenceDois;
 				nextLevelReferenceDois = [];
 
@@ -298,7 +317,29 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 					}}
 				/>
 			) : (
-				<div className="skeleton h-96 w-full rounded"></div>
+				<div className="h-96 w-full rounded flex flex-col items-center justify-center">
+					<ul className="steps">
+						{[...Array(n)].map((_, i) => (
+							<li
+								key={i}
+								className={`step ${
+									i === stage
+										? "step-neutral"
+										: i < stage
+											? "step-success"
+											: ""
+								}`}
+							>
+								Level {i + 1}
+							</li>
+						))}
+					</ul>
+					<progress
+						className="progress w-56"
+						value={stageProgress}
+						max="100"
+					></progress>
+				</div>
 			)}
 		</div>
 	);
