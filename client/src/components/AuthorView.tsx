@@ -1,5 +1,6 @@
 import { Work } from "../types";
 import { Link } from "react-router-dom";
+import { Tooltip } from "./Tooltip";
 
 interface AuthorViewProps {
 	name: string;
@@ -10,7 +11,29 @@ interface AuthorViewProps {
 const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 	return (
 		<div className="mb-8">
-			<h2 className="text-3xl font-medium mb-6">{name}</h2>
+			<div className="flex items-center justify-between">
+				<h2 className="text-3xl font-medium mb-6">{name}</h2>
+				<Tooltip
+					className="dropdown-end"
+					title="Data Source"
+					content={() => {
+						return (
+							<p>
+								Data provided by{" "}
+								<a
+									href="https://www.crossref.org/"
+									target="_blank"
+									rel="noreferrer"
+									className="link link-primary"
+								>
+									Crossref
+								</a>
+								.
+							</p>
+						);
+					}}
+				/>
+			</div>
 			{orcid && <p className="text-xl mb-4">ORCID: {orcid}</p>}
 			<h3 className="text-2xl font-medium mb-4">Metrics</h3>
 			<div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">

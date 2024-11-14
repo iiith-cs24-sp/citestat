@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { CrossRefResponse, Author as AuthorType } from "../types";
 import Searchbar from "../components/Searchbar";
+import { Tooltip } from "../components/Tooltip";
 
 /**
  * Author with count
@@ -62,9 +63,31 @@ export const AuthorSearch: React.FC = () => {
 	return (
 		<div className="p-8">
 			<Searchbar initialQuery={query} />
-			<h2 className="text-3xl font-medium mb-6">
-				Authors matching "{query}"
-			</h2>
+			<div className="flex items-center justify-between">
+				<h2 className="text-3xl font-medium mb-6">
+					Authors matching "{query}"
+				</h2>
+				<Tooltip
+					className="dropdown-end"
+					title="Data Source"
+					content={() => {
+						return (
+							<p>
+								Data provided by{" "}
+								<a
+									href="https://www.crossref.org/"
+									target="_blank"
+									rel="noreferrer"
+									className="link link-primary"
+								>
+									Crossref
+								</a>
+								.
+							</p>
+						);
+					}}
+				/>
+			</div>
 			{loading ? (
 				<ul className="space-y-4">
 					<li className="skeleton h-16 w-full rounded"></li>
@@ -100,5 +123,3 @@ export const AuthorSearch: React.FC = () => {
 		</div>
 	);
 };
-
-
