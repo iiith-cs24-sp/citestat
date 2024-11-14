@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { GraphExample } from "./NetworkGraph";
+import { NetworkGraph } from "./NetworkGraph";
 import { GraphEdge, GraphNode } from "reagraph";
 
 /**
@@ -325,7 +325,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 	return (
 		<div>
 			{!loading ? (
-				<GraphExample
+				<NetworkGraph
 					width={graphWidth}
 					height={graphHeight}
 					nodes={nodes}

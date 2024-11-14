@@ -9,7 +9,7 @@ import {
 	LayoutTypes,
 } from "reagraph";
 
-interface GraphExampleProps {
+interface NetworkGraphProps {
 	width: number | string;
 	height: number | string;
 	nodes: GraphNode[];
@@ -17,7 +17,7 @@ interface GraphExampleProps {
 	onNodeClick?: (node: GraphNode) => void;
 }
 
-export const GraphExample: React.FC<GraphExampleProps> = ({
+export const NetworkGraph: React.FC<NetworkGraphProps> = ({
 	width,
 	height,
 	nodes,
