@@ -51,25 +51,33 @@ interface DoiNetworkProps {
 const citationRequestCache = new Map<string, Citation[]>();
 const referenceRequestCache = new Map<string, Citation[]>();
 
-async function fetchCitations(doi: string) {
+async function fetchCitations(doi: string, abortController: AbortController) {
 	if (citationRequestCache.has(doi)) {
 		return citationRequestCache.get(doi)!;
 	}
 	const res = await fetch(
 		`https://opencitations.net/index/api/v2/citations/doi:${doi}`,
+		{ signal: abortController.signal },
 	);
+	if (!res.ok) {
+		return [];
+	}
 	const data = await res.json();
 	citationRequestCache.set(doi, data);
 	return data as Citation[];
 }
 
-async function fetchReferences(doi: string) {
+async function fetchReferences(doi: string, abortController: AbortController) {
 	if (referenceRequestCache.has(doi)) {
 		return referenceRequestCache.get(doi)!;
 	}
 	const res = await fetch(
 		`https://opencitations.net/index/api/v2/references/doi:${doi}`,
+		{ signal: abortController.signal },
 	);
+	if (!res.ok) {
+		return [];
+	}
 	const data = await res.json();
 	referenceRequestCache.set(doi, data);
 	return data as Citation[];
@@ -89,6 +97,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 		setLoading(true);
 		setStage(0);
 		setStageProgress(0);
+		const abortController = new AbortController(); // Abort controller for cancelling requests
 
 		const fetchData = async () => {
 			const citationLevels: Citation[][] = [];
@@ -109,7 +118,10 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 
 				// Loop through the dois in the queue
 				for (const citationDoi of citationDois) {
-					const citations = await fetchCitations(citationDoi);
+					const citations = await fetchCitations(
+						citationDoi,
+						abortController,
+					);
 					citationLevel.push(...citations);
 					citations.forEach((citation) => {
 						const citingDoi =
@@ -133,7 +145,10 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 
 				// Loop through the dois in the queue
 				for (const referenceDoi of referenceDois) {
-					const references = await fetchReferences(referenceDoi);
+					const references = await fetchReferences(
+						referenceDoi,
+						abortController,
+					);
 					referenceLevel.push(...references);
 					references.forEach((reference) => {
 						const citedDoi =
@@ -172,6 +187,10 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 		fetchData().catch((err) => {
 			console.error(`Failed to fetch data: ${err}`);
 		});
+
+		return () => {
+			abortController.abort(); // Cancel any existing requests
+		};
 	}, [doi, n]);
 
 	// Update graph nodes and edges
