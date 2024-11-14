@@ -41,7 +41,7 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({
 					link.setAttribute("download", "network_graph.png");
 					link.click();
 				}}
-				className="btn z-50 relative m-1"
+				className="btn btn-outline btn-neutral z-50 relative m-1"
 			>
 				Save as Image
 			</button>
