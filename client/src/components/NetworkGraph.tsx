@@ -34,16 +34,26 @@ const GraphControls = forwardRef<GraphCanvasRef, GraphControlsProps>(
 				>
 					Save as Image
 				</button>
-				<select
-					className="select select-bordered select-ghost z-50 relative m-1"
-					onChange={(e) => {
-						props.setCameraMode(e.target.value as CameraMode);
+				<button
+					onClick={() => {
+						const data = (
+							ref as React.RefObject<GraphCanvasRef>
+						).current
+							?.getGraph()
+							.export();
+						console.log(data);
+						const link = document.createElement("a");
+						link.setAttribute(
+							"href",
+							`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`,
+						);
+						link.setAttribute("download", "network_graph.json");
+						link.click();
 					}}
+					className="btn btn-outline btn-neutral z-50 relative m-1"
 				>
-					<option value="pan">Pan</option>
-					<option value="rotate">Rotate</option>
-					<option value="orbit">Orbit</option>
-				</select>
+					Export to JSON
+				</button>
 			</div>
 		);
 	},
