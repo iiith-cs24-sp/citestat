@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Searchbar from "../components/Searchbar";
+import { Tooltip } from "../components/Tooltip";
 import { DoiNetwork } from "../components/DoiNetwork";
 import { CSLData } from "../models/CslJson";
 
@@ -102,14 +103,60 @@ export const DOI: React.FC = () => {
 	return (
 		<div className="p-8">
 			<Searchbar initialQuery={query} />
-			<h2 className="text-3xl font-medium mb-6">DOI "{query}"</h2>
+			<div className="flex items-center justify-between">
+				<h2 className="text-3xl font-medium mb-6">DOI "{query}"</h2>
+				<Tooltip
+					className="dropdown-end"
+					title="Data Source for DOI information"
+					content={() => {
+						return (
+							<p>
+								We use{" "}
+								<a
+									href="https://citation.js.org/"
+									target="_blank"
+									rel="noreferrer"
+									className="link link-primary"
+								>
+									Citation.js
+								</a>{" "}
+								to fetch the metadata for the DOI. This allows
+								us to follow DOI redirects and fetch the
+								metadata from any source.
+							</p>
+						);
+					}}
+				/>
+			</div>
 			{loading || !data ? (
 				<div className="skeleton h-96 w-full rounded"></div>
 			) : (
 				DoiView(data)
 			)}
 			<div className="my-6 flex items-center justify-between">
-				<h3 className="text-2xl font-medium">Citation Network</h3>
+				<h3 className="text-2xl font-medium">
+					Citation Network
+					<Tooltip
+						className="dropdown-right"
+						title="Citation Network"
+						content={() => {
+							return (
+								<p>
+									Data provided by{" "}
+									<a
+										href="https://opencitations.net/"
+										target="_blank"
+										rel="noreferrer"
+										className="link link-primary"
+									>
+										OpenCitations
+									</a>
+									.
+								</p>
+							);
+						}}
+					/>
+				</h3>
 				<select
 					className="select select-bordered w-full max-w-xs"
 					onChange={(e) => {
