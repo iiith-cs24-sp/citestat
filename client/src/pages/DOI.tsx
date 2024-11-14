@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Searchbar from "../components/Searchbar";
 import { Work } from "../types";
+import { DoiNetwork } from "../components/DoiNetwork";
 
 /**
  * Sample Response from the Crossref API for a DOI query : api.crossref.org/works/{doi}
@@ -221,6 +222,7 @@ export const DOI: React.FC = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 	const query = decodeURIComponent(useParams().doi as string);
+	const [level, setLevel] = useState<number>(1);
 
 	useEffect(() => {
 		const fetchResults = async () => {
@@ -260,9 +262,31 @@ export const DOI: React.FC = () => {
 			) : (
 				DoiView(data)
 			)}
+			<div className="my-6 flex items-center justify-between">
+				<h3 className="text-2xl font-medium">Citation Network</h3>
+				<select
+					className="select select-bordered w-full max-w-xs"
+					onChange={(e) => {
+						const value = parseInt(e.target.value);
+						if (
+							value >= 2 &&
+							!window.confirm(
+								"This will take a long time to load. Are you sure?",
+							)
+						) {
+							return;
+						}
+						setLevel(value);
+					}}
+					value={level}
+				>
+					<option value="0">Level 0</option>
+					<option value="1">Level 1</option>
+					<option value="2">Level 2</option>
+					<option value="3">Level 3</option>
+				</select>
+			</div>
+			<DoiNetwork doi={query} n={level} />
 		</div>
 	);
 };
-
-// eslint-disable-next-line react-refresh/only-export-components
-

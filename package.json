@@ -20,6 +20,7 @@
 	"dependencies": {
 		"chart.js": "^4.4.6",
 		"chartjs": "^0.3.24",
-		"react-chartjs-2": "^5.2.0"
+		"react-chartjs-2": "^5.2.0",
+		"reagraph": "^4.19.5"
 	}
 }
