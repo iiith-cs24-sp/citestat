@@ -217,6 +217,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 				label: doi,
 				fill: isDarkMode ? "#ffffff" : "#000000",
 				size: 10,
+				data: { level: 0 },
 			});
 			validDOIs.add(doi);
 		}
@@ -241,6 +242,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 							id: citingDoi,
 							label: citingDoi,
 							fill: fillColour,
+							data: { level: level + 1 },
 						});
 						validDOIs.add(citingDoi);
 					}
@@ -249,6 +251,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 							id: citedDoi,
 							label: citedDoi,
 							fill: fillColour,
+							data: { level: level + 1 },
 						});
 						validDOIs.add(citedDoi);
 					}
@@ -287,6 +290,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 							id: citingDoi,
 							label: citingDoi,
 							fill: fillColour,
+							data: { level: -(level + 1) },
 						});
 						validDOIs.add(citingDoi);
 					}
@@ -295,6 +299,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 							id: citedDoi,
 							label: citedDoi,
 							fill: fillColour,
+							data: { level: -(level + 1) },
 						});
 						validDOIs.add(citedDoi);
 					}
