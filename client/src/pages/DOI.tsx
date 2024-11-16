@@ -97,6 +97,14 @@ export const DOI: React.FC = () => {
 		if (query) fetchResults();
 	}, [query]);
 
+	useEffect(() => {
+		const oldTitle = document.title;
+		document.title = `Citestat | "${data?.title ?? query}"`;
+		return () => {
+			document.title = oldTitle;
+		};
+	}, [data, query]);
+
 	if (error)
 		return <h2 className="text-3xl font-medium mb-6">Error: {error}</h2>;
 
