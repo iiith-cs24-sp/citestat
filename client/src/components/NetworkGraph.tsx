@@ -42,10 +42,11 @@ const GraphControls = forwardRef<GraphCanvasRef, GraphControlsProps>(
 							?.getGraph()
 							.export();
 						console.log(data);
+						const JsonData = JSON.stringify(data, null, 4);
 						const link = document.createElement("a");
 						link.setAttribute(
 							"href",
-							`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(data))}`,
+							`data:text/json;charset=utf-8,${encodeURIComponent(JsonData)}`,
 						);
 						link.setAttribute("download", "network_graph.json");
 						link.click();
