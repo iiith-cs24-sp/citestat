@@ -91,6 +91,11 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [stage, setStage] = useState<number>(0);
 	const [stageProgress, setStageProgress] = useState<number>(0);
+	const [isDarkMode, setDarkMode] = useState<boolean>(
+		getComputedStyle(document.documentElement).getPropertyValue(
+			"color-scheme",
+		) === "dark",
+	);
 
 	// Fetch citation and reference data
 	useEffect(() => {
@@ -201,10 +206,11 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 		const validEdgeIDs: Set<string> = new Set();
 		const newNodes: Set<GraphNode> = new Set();
 		const newEdges: GraphEdge[] = [];
-		const isDarkMode =
+		setDarkMode(
 			getComputedStyle(document.documentElement).getPropertyValue(
 				"color-scheme",
-			) === "dark";
+			) === "dark",
+		);
 
 		console.log("citations");
 		console.dir(citations);
@@ -322,7 +328,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 		console.dir(newEdges);
 		setNodes(Array.from(newNodes));
 		setEdges(newEdges);
-	}, [doi, citations, references]);
+	}, [doi, citations, references, isDarkMode]);
 
 	const graphWidth = "100%";
 	const graphHeight = 720;
@@ -339,6 +345,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 						if (node.id !== doi)
 							window.location.href = `/doi/${encodeURIComponent(node.id)}`;
 					}}
+					darkMode={isDarkMode}
 				/>
 			) : (
 				<div className="h-96 w-full rounded flex flex-col items-center justify-center">

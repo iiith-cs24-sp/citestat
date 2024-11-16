@@ -9,6 +9,7 @@ import {
 	recommendLayout,
 	LayoutTypes,
 	CameraMode,
+	useSelection,
 } from "reagraph";
 
 interface GraphControlsProps {
@@ -66,6 +67,7 @@ interface NetworkGraphProps {
 	nodes: GraphNode[];
 	edges: GraphEdge[];
 	onNodeClick?: (node: GraphNode) => void;
+	darkMode?: boolean;
 }
 
 export const NetworkGraph: React.FC<NetworkGraphProps> = ({
@@ -74,30 +76,36 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({
 	nodes,
 	edges,
 	onNodeClick,
+	darkMode = false,
 }) => {
-	const ref = useRef<GraphCanvasRef | null>(null);
+	const graphRef = useRef<GraphCanvasRef | null>(null);
 	const layout: LayoutTypes = recommendLayout(nodes, edges);
 	console.log(layout);
 	const [cameraMode, setCameraMode] = React.useState<CameraMode>("pan");
+	const { selections, actives, onNodePointerOver, onNodePointerOut } =
+		useSelection({
+			ref: graphRef,
+			nodes: nodes,
+			edges: edges,
+			pathHoverType: "all",
+		});
 
 	return (
 		<div style={{ position: "relative", width: width, height: height }}>
-			<GraphControls setCameraMode={setCameraMode} ref={ref} />
+			<GraphControls setCameraMode={setCameraMode} ref={graphRef} />
 			<GraphCanvas
-				ref={ref}
+				ref={graphRef}
 				nodes={nodes}
 				edges={edges}
 				layoutType={layout}
 				sizingType="centrality"
 				cameraMode={cameraMode}
+				selections={selections}
+				actives={actives}
+				onNodePointerOver={onNodePointerOver}
+				onNodePointerOut={onNodePointerOut}
 				onNodeClick={onNodeClick}
-				theme={
-					getComputedStyle(document.documentElement).getPropertyValue(
-						"color-scheme",
-					) === "dark"
-						? darkTheme
-						: lightTheme
-				}
+				theme={darkMode ? darkTheme : lightTheme}
 			/>
 		</div>
 	);
