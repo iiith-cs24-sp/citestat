@@ -343,7 +343,10 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 					edges={edges}
 					onNodeClick={(node) => {
 						if (node.id !== doi)
-							window.location.href = `/doi/${encodeURIComponent(node.id)}`;
+							window.open(
+								`/doi/${encodeURIComponent(node.id)}`,
+								"_blank",
+							);
 					}}
 					darkMode={isDarkMode}
 				/>
