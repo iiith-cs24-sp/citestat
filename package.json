@@ -11,7 +11,8 @@
 		"start": "concurrently \"cd ./server && npm run start\" \"cd ./client && npm run dev\"",
 		"delete-modules": "rm -r ./node_modules && cd ./server && rm -r ./node_modules && cd ../client && rm -r ./node_modules",
 		"check-format": "prettier . --check",
-		"format": "prettier . --write"
+		"format": "prettier . --write",
+		"doc": "cd ./client && npx typedoc --skipErrorChecking"
 	},
 	"devDependencies": {
 		"concurrently": "^6.3.0",
