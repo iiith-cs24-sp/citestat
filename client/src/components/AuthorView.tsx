@@ -11,8 +11,8 @@ interface AuthorViewProps {
 const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 	return (
 		<div className="mb-8">
-			<div className="flex items-center justify-between">
-				<h2 className="text-3xl font-medium mb-6">{name}</h2>
+			<div className="flex items-center justify-between mb-6">
+				<h2 className="text-3xl font-medium">{name}</h2>
 				<Tooltip
 					className="dropdown-end"
 					title="Data Source"
@@ -57,7 +57,38 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 					})()}
 				</p>
 			</div>
-			<h3 className="text-2xl font-medium mb-4">Works</h3>
+			<div className="flex items-center justify-between my-4">
+				<h3 className="text-2xl font-medium">Works</h3>
+				<Tooltip
+					className="dropdown-end"
+					title="All works not listed?"
+					content={() => {
+						if (orcid)
+							return (
+								<p>They might not be linked to your ORCID.</p>
+							);
+						return (
+							<p>
+								Search by ORCID to view all works.
+								<br />
+								Don't have an ORCID?
+								<br />
+								Go and get one at{" "}
+								<a
+									href="https://orcid.org/"
+									target="_blank"
+									rel="noreferrer"
+									className="link link-primary"
+								>
+									orcid.org
+								</a>
+								<br />
+								<b>It's free!</b>
+							</p>
+						);
+					}}
+				/>
+			</div>
 			<ul className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
 				{works.map((work) => (
 					<li
