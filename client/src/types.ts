@@ -140,20 +140,16 @@ export interface CrossRefResponse {
         "author_sc": "no",
         "citing": "10.1016/j.isci.2021.103478"
  */
-export interface Citation
-{
-	"timespan": string;
-	"oci": string;
-	"journal_sc": string;
+export interface Citation {
+	timespan: string;
+	oci: string;
+	journal_sc: string;
 	cited: string;
 	creation: string;
-	"author_sc":string;
-	"citing":string;
-
+	author_sc: string;
+	citing: string;
 }
 
-export interface OpencitationsResponse
-{
+export interface OpencitationsResponse {
 	items: Citation[];
-	
 }
