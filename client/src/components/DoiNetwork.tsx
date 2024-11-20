@@ -1,29 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NetworkGraph } from "./NetworkGraph";
 import { GraphEdge, GraphNode } from "reagraph";
-
-/**
- * Citation object from the OpenCitations API
- * @example
-  {
-    "timespan": "P1Y2M21D",
-    "oci": "061202325243-062403150807",
-    "journal_sc": "no",
-    "cited": "omid:br/062403150807 doi:10.1145/3452383.3452391 openalex:W3159497091",
-    "creation": "2022-05-16",
-    "author_sc": "no",
-    "citing": "omid:br/061202325243 doi:10.1145/3535511.3535541 openalex:W4283735155"
-  },
- */
-interface Citation {
-	timespan: string;
-	oci: string;
-	journal_sc: string;
-	cited: string;
-	creation: string;
-	author_sc: string;
-	citing: string;
-}
+import { Citation } from "../models/Citation";
 
 /**
  * Generate a colour based on a number, e.g., -2, -1, 0, 1, 2, 3, ...
