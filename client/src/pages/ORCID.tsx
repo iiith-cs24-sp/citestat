@@ -67,6 +67,14 @@ export const ORCID: React.FC = () => {
 		if (orcid) fetchResults();
 	}, [orcid]);
 
+	useEffect(() => {
+		const oldTitle = document.title;
+		document.title = `Citestat | ${authorName}`;
+		return () => {
+			document.title = oldTitle;
+		};
+	}, [authorName]);
+
 	if (error)
 		return <h2 className="text-3xl font-medium mb-6">Error: {error}</h2>;
 

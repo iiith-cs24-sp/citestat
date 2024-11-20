@@ -48,6 +48,14 @@ export const AuthorPage: React.FC = () => {
 		if (dois) fetchResults();
 	}, [dois]);
 
+	useEffect(() => {
+		const oldTitle = document.title;
+		document.title = `Citestat | ${name}`;
+		return () => {
+			document.title = oldTitle;
+		};
+	}, [name]);
+
 	if (error)
 		return <h2 className="text-3xl font-medium mb-6">Error: {error}</h2>;
 
