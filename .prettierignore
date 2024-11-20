@@ -1,7 +1,13 @@
 # Exclude all files
 *.*
 
-# Other than
+# Exclude the output folder
+client/dist
+client/docs
+
+**/package-lock.json
+
+# Do not ignore the following files
 !**/*.html
 !**/*.css
 !**/*.json
