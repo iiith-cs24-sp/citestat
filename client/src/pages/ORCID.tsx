@@ -34,7 +34,9 @@ export const ORCID: React.FC = () => {
 						author.ORCID?.includes(orcid),
 					)!;
 					console.log(contributors);
-					setAuthorName(author?.given + " " + author?.family);
+					setAuthorName(
+						(author?.given ?? "") + " " + (author?.family ?? ""),
+					);
 				});
 
 				const response = await fetch(
