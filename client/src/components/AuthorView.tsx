@@ -8,6 +8,12 @@ interface AuthorViewProps {
 	works: Work[];
 }
 
+/**
+ * @param props.name - Name of the author
+ * @param props.orcid - Orcid of the author
+ * @param props.works - Publications from this author
+ * @returns React component displaying data for author
+ */
 const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 	return (
 		<div className="mb-8">

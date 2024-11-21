@@ -4,6 +4,13 @@ import Searchbar from "../components/Searchbar";
 import { Author, Work } from "../types";
 import AuthorView from "../components/AuthorView";
 
+/**
+ * @property authorName - name of this author
+ * @property works - publications by this author
+ * @property loading : loading status
+ * @property error: whether there was some error in fetching api results
+ * @returns Stats related to orc id in react component
+ */
 export const ORCID: React.FC = () => {
 	const [authorName, setAuthorName] = useState<string>();
 	const [works, setWorks] = useState<Work[]>();

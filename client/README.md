@@ -1,26 +1,25 @@
 # Instructions for documentation
 
-# Notes from Crossref api
+  Doc comments standards for typescript:https://tsdoc.org/
+  Comments to documentation generator library typedoc :https://typedoc.org/
   
+# Some DOI and ORCIDs used for execution and testing
 
-# Information about project template: React + TypeScript + Vite
+  DOIs
+
+    Example from opencitations example page :"10.1002/adfm.201505328"
+    Attention is all you need (inspiration behind chat GPT)"10.48550/arXiv.1706.03762"
+  ORCIDs
 
 # Helpful reference resources
 
-## D3.js
-  https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js
-  https://2019.wattenberger.com/blog/react-and-d3
-
-  Guide to using D3 force
-  https://medium.com/@qdangdo/visualizing-connections-a-guide-to-react-d3-force-graphs-typescript-74b7af728c90
-
 ## Crossref API
+  https://api.crossref.org/swagger-ui/index.html
   https://www.crossref.org/documentation/retrieve-metadata/rest-api/a-non-technical-introduction-to-our-api/ 
 
 ## Opencitations for getting citations yearwise
 
   https://opencitations.net/index/coci/api/v1/citations/10.3389/fimmu.2020.602256
-
   https://opencitations.net/index/coci/api/v1#/citations/%7Bdoi%7D
 
 ## Standard documentation pages :
@@ -28,6 +27,17 @@
   https://mongoosejs.com/docs/ , 
   https://expressjs.com/en/4x/api.html ,
   https://react.dev/reference/react Video 
+  
+## Chart js (IN USE : FOR YEARWISE CITATION HISTOGRAM)
+  https://www.chartjs.org/docs/latest/
+## D3.js (may use , for chart and network graphs)
+  https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js
+  https://2019.wattenberger.com/blog/react-and-d3
+
+  Guide to using D3 force
+  https://medium.com/@qdangdo/visualizing-connections-a-guide-to-react-d3-force-graphs-typescript-74b7af728c90
+
+# Information about project template: React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

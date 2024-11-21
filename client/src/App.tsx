@@ -5,18 +5,16 @@ import {
 	Link,
 	Navigate,
 } from "react-router-dom";
-import { Home } from "./pages/Home";
-import { AuthorSearch } from "./pages/AuthorSearch";
-import { DOI } from "./pages/DOI";
-import { ORCID } from "./pages/ORCID";
-import { AuthorPage } from "./pages/AuthorPage";
-//import {SampleChartParent} from "./pages/YearCitationChart";
+import {Home} from "./pages/Home";
+import {AuthorSearch} from "./pages/AuthorSearch";
+import {DOI} from "./pages/DOI";
+import {ORCID} from "./pages/ORCID";
+import {AuthorPage} from "./pages/AuthorPage";
 import { YearCitationChart } from "./pages/YearCitationChart";
 
 /**
- * Main App object
+ * Main App object with frontend routes
  */
-//const doi ="10.1002/adfm.201505328";
 function App() {
 	return (
 		<Router>

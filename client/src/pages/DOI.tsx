@@ -9,6 +9,7 @@ import { CSLData } from "../models/CslJson";
 import "@citation-js/plugin-doi";
 import { Cite } from "@citation-js/core";
 
+
 const DoiView: React.FC<CSLData> = (cslData: CSLData) => {
 	console.log(cslData);
 	return (
@@ -71,7 +72,13 @@ const DoiView: React.FC<CSLData> = (cslData: CSLData) => {
 		</div>
 	);
 };
-
+/**
+ * @property data 
+ * @property query : parsed doi string from url request
+ * @property loading : loading status
+ * @property error: whether there was some error in fetching api results
+ * @returns  React component showing stats and charts related to DOI 
+ */
 export const DOI: React.FC = () => {
 	const [data, setData] = useState<CSLData>();
 	const [loading, setLoading] = useState<boolean>(true);

@@ -60,7 +60,12 @@ async function fetchReferences(doi: string, abortController: AbortController) {
 	referenceRequestCache.set(doi, data);
 	return data as Citation[];
 }
-
+/**
+ * DOI Network graph corresponding to DOI for a publication
+ * @param props.doi doi string pointing to the publication
+ * @param props.n  number of levels to be displayed in the citation network graph
+ * @returns 
+ */
 export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 	const [citations, setCitations] = useState<Citation[][] | null>(null);
 	const [references, setReferences] = useState<Citation[][] | null>(null);

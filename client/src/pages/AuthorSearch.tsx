@@ -5,13 +5,19 @@ import Searchbar from "../components/Searchbar";
 import { Tooltip } from "../components/Tooltip";
 
 /**
- * Author with count
+ * Author search result row adding more properties to author type interface
+ * 
  */
 interface AuthorWithCount extends AuthorType {
 	publicationDOIs: string[];
 	publicationCount: number;
 }
-
+/**
+ * @property authors : A single row from rows of search results 
+ =*@property loading : loading status
+ * @property error: whether there was some error in fetching api results
+ *  @returns Search results for author name
+ */
 export const AuthorSearch: React.FC = () => {
 	const [authors, setAuthors] = useState<AuthorWithCount[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);

@@ -69,7 +69,14 @@ interface NetworkGraphProps {
 	onNodeClick?: (node: GraphNode) => void;
 	darkMode?: boolean;
 }
-
+/**
+ * 
+ * @param props.width 
+ * @param props.height
+ * @param props.nodes : nodes in the network graph
+ * @param props.edges: edges in the network graph
+ * @returns 
+ */
 export const NetworkGraph: React.FC<NetworkGraphProps> = ({
 	width,
 	height,

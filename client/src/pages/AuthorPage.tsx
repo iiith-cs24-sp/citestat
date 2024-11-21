@@ -5,11 +5,12 @@ import AuthorView from "../components/AuthorView";
 import { useSearchParams } from "react-router-dom";
 
 /**
- *  works  :
- * loading : loading status
- * error: whether there was some error in fetching api results
- *  searchParams : search parameters extracted from url
- * @returns Author page functional component
+ *  Author page React functional component
+ *@property works  : Publications from this author
+ *@property loading : loading status
+ *@property error: whether there was some error in fetching api results
+ *@property searchParams : search parameters extracted from url
+  @returns 
  */
 export const AuthorPage: React.FC = () => {
 	const [works, setWorks] = useState<Work[]>();
