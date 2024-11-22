@@ -1,4 +1,4 @@
-import Chart, { ChartItem } from "chart.js/auto";
+import Chart, { ChartItem, registerables } from "chart.js/auto";
 import React, { useEffect, useState } from "react";
 import { Citation } from "../models/Citation";
 
@@ -85,6 +85,7 @@ export const YearCitationChart: React.FC<YearCitationChartProps> = (props) => {
 					datasets: [
 						{
 							label: "Citations by year",
+							backgroundColor: "#Ff0000",
 							data: dataTemp.map((row) => row.count),
 						},
 					],
@@ -101,16 +102,15 @@ export const YearCitationChart: React.FC<YearCitationChartProps> = (props) => {
 	return (
 		<div className="p-8">
 			<h2 className="text-3xl font-medium mb-6">
-				Citations per year for doi= "{props.doi}"{" "}
+				Bar Chart for citations per year
 			</h2>
 			{loading ? (
 				<div className="skeleton h-96 w-full rounded"></div>
 			) : (
 				<></>
 			)}
-			<div style={{ width: 800, display: loading ? "hidden" : "block" }}>
-				<canvas id="citations"></canvas>
-			</div>
+
+			<canvas id="citations"></canvas>
 		</div>
 	);
 };

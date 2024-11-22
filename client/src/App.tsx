@@ -10,7 +10,7 @@ import { AuthorSearch } from "./pages/AuthorSearch";
 import { DOI } from "./pages/DOI";
 import { ORCID } from "./pages/ORCID";
 import { AuthorPage } from "./pages/AuthorPage";
-import { YearCitationChart } from "./pages/YearCitationChart";
+import { YearCitationChart } from "./components/YearCitationChart";
 
 /**
  * Main App object with frontend routes
@@ -34,12 +34,6 @@ function App() {
 					<Route path="/author/:orcid" element={<ORCID />} />
 					<Route path="/author" element={<AuthorPage />} />
 					<Route path="*" element={<Navigate to="/" />} />
-					<Route
-						path="/sample"
-						element={
-							<YearCitationChart doi={"10.1002/adfm.201505328"} />
-						}
-					/>
 				</Routes>
 			</div>
 		</Router>

@@ -8,6 +8,7 @@ import { CSLData } from "../models/CslJson";
 // Load Citation.js
 import "@citation-js/plugin-doi";
 import { Cite } from "@citation-js/core";
+import { YearCitationChart } from "../components/YearCitationChart";
 
 const DoiView: React.FC<CSLData> = (cslData: CSLData) => {
 	console.log(cslData);
@@ -194,6 +195,7 @@ export const DOI: React.FC = () => {
 				</select>
 			</div>
 			<DoiNetwork doi={query} n={level} />
+			<YearCitationChart doi={query} />
 		</div>
 	);
 };
