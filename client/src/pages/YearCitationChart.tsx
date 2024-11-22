@@ -1,21 +1,17 @@
 import Chart, { ChartItem } from "chart.js/auto";
-import { useEffect, useState } from "react";
-//import { useParams } from "react-router-dom";
-//import { OpencitationsResponse, Citation } from "../types";
+import React, { useEffect, useState } from "react";
+import { Citation } from "../models/Citation";
+
 interface CitationAndYear {
 	year: number;
 	count: number;
 }
-/**
- * Interface to pass Citation and year to sample chart component (sample chart not in  use at present)
- */
 
 /**
  * Interface to pass doi string to react component
  */
-interface PassString
-{
-	data:string;
+interface YearCitationChartProps {
+	doi: string;
 }
 
 /**
@@ -26,63 +22,29 @@ interface PassString
  * @property error: whether there was some error in fetching api results
  * @returns React component displaying a single Chart showing citations per year
  */
-export const YearCitationChart = (props: PassString) => {
-	let { data: doiParameter } = props;
+export const YearCitationChart: React.FC<YearCitationChartProps> = (props) => {
 	const currentYear: number = new Date().getFullYear();
 	console.log(currentYear);
+	const [data, setData] = useState<Citation[]>();
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-	const query = doiParameter;
+	const query = props.doi;
+
 	useEffect(() => {
 		const fetchopenCitationsResults = async () => {
 			try {
 				setLoading(true);
 				const response = await fetch(
-					`https://opencitations.net/index/coci/api/v1/citations/${query}`,
+					`https://opencitations.net/index/api/v2/citations/doi:${query}`,
 				);
-				console.log(response);
 				if (!response.ok)
 					throw new Error(
 						response.status + " " + response.statusText,
 					);
-				const dataObtained = await response.json();
-				let yearMap = new Map<number, number>();
-				dataObtained.forEach((citation: { creation: string }) => {
-					const year = new Date(citation.creation).getFullYear();
-					let val = yearMap.get(year);
-					if (val) {
-						yearMap.set(year, val + 1);
-					} else {
-						yearMap.set(year, 1);
-					}
+
+				await response.json().then((dataObtained) => {
+					setData(dataObtained);
 				});
-				console.log(yearMap);
-				let yearObj = Object.fromEntries(yearMap);
-				let dataTemp: CitationAndYear[] = [];
-				Object.keys(yearObj).map((k) => {
-					dataTemp.push({
-						year: Number.parseInt(k),
-						count: yearObj[k],
-					});
-				});
-				let chart = new Chart(
-					document.getElementById("citations") as ChartItem,
-					{
-						type: "bar",
-						data: {
-							labels: dataTemp.map((row) => row.year),
-							datasets: [
-								{
-									label: "Citations by year",
-									data: dataTemp.map((row) => row.count),
-								},
-							],
-						},
-					},
-				);
-				return () => {
-					chart.destroy();
-				};
 			} catch (err) {
 				setError((err as Error).message);
 			} finally {
@@ -92,20 +54,63 @@ export const YearCitationChart = (props: PassString) => {
 		if (query) fetchopenCitationsResults();
 	}, [query]);
 
+	useEffect(() => {
+		if (!data) return;
+		console.debug(data);
+		let yearMap = new Map<number, number>();
+		data.forEach((citation) => {
+			const year = new Date(citation.creation).getFullYear();
+			let val = yearMap.get(year);
+			if (val) {
+				yearMap.set(year, val + 1);
+			} else {
+				yearMap.set(year, 1);
+			}
+		});
+		console.log(yearMap);
+		let yearObj = Object.fromEntries(yearMap);
+		let dataTemp: CitationAndYear[] = [];
+		Object.keys(yearObj).map((k) => {
+			dataTemp.push({
+				year: Number.parseInt(k),
+				count: yearObj[k],
+			});
+		});
+		const chart = new Chart(
+			document.getElementById("citations") as ChartItem,
+			{
+				type: "bar",
+				data: {
+					labels: dataTemp.map((row) => row.year),
+					datasets: [
+						{
+							label: "Citations by year",
+							data: dataTemp.map((row) => row.count),
+						},
+					],
+				},
+			},
+		);
+		return () => {
+			chart.destroy();
+		};
+	}, [data]);
+
 	if (error)
 		return <h2 className="text-3xl font-medium mb-6">Error: {error}</h2>;
 	return (
 		<div className="p-8">
 			<h2 className="text-3xl font-medium mb-6">
-				Citations per year for doi= "{doiParameter}"{" "}
+				Citations per year for doi= "{props.doi}"{" "}
 			</h2>
-			{loading || !doiParameter ? (
+			{loading ? (
 				<div className="skeleton h-96 w-full rounded"></div>
 			) : (
-				<div style={{ width: 800 }}>
-					<canvas id="citations"></canvas>
-				</div>
+				<></>
 			)}
+			<div style={{ width: 800, display: loading ? "hidden" : "block" }}>
+				<canvas id="citations"></canvas>
+			</div>
 		</div>
 	);
 };

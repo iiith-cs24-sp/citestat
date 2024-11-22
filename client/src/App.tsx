@@ -5,11 +5,11 @@ import {
 	Link,
 	Navigate,
 } from "react-router-dom";
-import {Home} from "./pages/Home";
-import {AuthorSearch} from "./pages/AuthorSearch";
-import {DOI} from "./pages/DOI";
-import {ORCID} from "./pages/ORCID";
-import {AuthorPage} from "./pages/AuthorPage";
+import { Home } from "./pages/Home";
+import { AuthorSearch } from "./pages/AuthorSearch";
+import { DOI } from "./pages/DOI";
+import { ORCID } from "./pages/ORCID";
+import { AuthorPage } from "./pages/AuthorPage";
 import { YearCitationChart } from "./pages/YearCitationChart";
 
 /**
@@ -37,9 +37,7 @@ function App() {
 					<Route
 						path="/sample"
 						element={
-							<YearCitationChart
-								data={"10.1002/adfm.201505328"}
-							/>
+							<YearCitationChart doi={"10.1002/adfm.201505328"} />
 						}
 					/>
 				</Routes>
