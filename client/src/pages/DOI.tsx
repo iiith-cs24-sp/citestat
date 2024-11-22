@@ -195,6 +195,29 @@ export const DOI: React.FC = () => {
 				</select>
 			</div>
 			<DoiNetwork doi={query} n={level} />
+			<div className="my-6 flex items-center justify-between">
+				<h3 className="text-2xl font-medium">Yearwise Citations</h3>
+				<Tooltip
+					className="dropdown-end"
+					title="Citation Network"
+					content={() => {
+						return (
+							<p>
+								Data provided by{" "}
+								<a
+									href="https://opencitations.net/"
+									target="_blank"
+									rel="noreferrer"
+									className="link link-primary"
+								>
+									OpenCitations
+								</a>
+								.
+							</p>
+						);
+					}}
+				/>
+			</div>
 			<YearCitationChart doi={query} />
 		</div>
 	);

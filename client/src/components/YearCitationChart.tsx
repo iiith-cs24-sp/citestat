@@ -1,4 +1,4 @@
-import Chart, { ChartItem, registerables } from "chart.js/auto";
+import Chart, { ChartItem } from "chart.js/auto";
 import React, { useEffect, useState } from "react";
 import { Citation } from "../models/Citation";
 
@@ -57,10 +57,10 @@ export const YearCitationChart: React.FC<YearCitationChartProps> = (props) => {
 	useEffect(() => {
 		if (!data) return;
 		console.debug(data);
-		let yearMap = new Map<number, number>();
+		const yearMap = new Map<number, number>();
 		data.forEach((citation) => {
 			const year = new Date(citation.creation).getFullYear();
-			let val = yearMap.get(year);
+			const val = yearMap.get(year);
 			if (val) {
 				yearMap.set(year, val + 1);
 			} else {
@@ -68,49 +68,52 @@ export const YearCitationChart: React.FC<YearCitationChartProps> = (props) => {
 			}
 		});
 		console.log(yearMap);
-		let yearObj = Object.fromEntries(yearMap);
-		let dataTemp: CitationAndYear[] = [];
+		const yearObj = Object.fromEntries(yearMap);
+		const dataTemp: CitationAndYear[] = [];
 		Object.keys(yearObj).map((k) => {
 			dataTemp.push({
 				year: Number.parseInt(k),
 				count: yearObj[k],
 			});
 		});
-		const chart = new Chart(
-			document.getElementById("citations") as ChartItem,
-			{
-				type: "bar",
-				data: {
-					labels: dataTemp.map((row) => row.year),
-					datasets: [
-						{
-							label: "Citations by year",
-							backgroundColor: "#Ff0000",
-							data: dataTemp.map((row) => row.count),
-						},
-					],
-				},
+		const canvas = document.getElementById("citations");
+		const chart = new Chart(canvas as ChartItem, {
+			type: "bar",
+			data: {
+				labels: dataTemp.map((row) => row.year),
+				datasets: [
+					{
+						label: "Citations by year",
+						backgroundColor: getComputedStyle(
+							canvas!,
+						).getPropertyValue("color"),
+						data: dataTemp.map((row) => row.count),
+					},
+				],
 			},
-		);
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+			},
+		});
 		return () => {
 			chart.destroy();
 		};
 	}, [data]);
 
 	if (error)
-		return <h2 className="text-3xl font-medium mb-6">Error: {error}</h2>;
+		return <p className="text-3xl font-medium mb-6">Error: {error}</p>;
 	return (
 		<div className="p-8">
-			<h2 className="text-3xl font-medium mb-6">
-				Bar Chart for citations per year
-			</h2>
 			{loading ? (
 				<div className="skeleton h-96 w-full rounded"></div>
 			) : (
 				<></>
 			)}
-
-			<canvas id="citations"></canvas>
+			<canvas
+				id="citations"
+				className="max-h-96 w-full rounded text-secondary"
+			></canvas>
 		</div>
 	);
 };
