@@ -199,7 +199,7 @@ export const DOI: React.FC = () => {
 				<h3 className="text-2xl font-medium">Yearwise Citations</h3>
 				<Tooltip
 					className="dropdown-end"
-					title="Citation Network"
+					title="Yearwise Citations"
 					content={() => {
 						return (
 							<p>
