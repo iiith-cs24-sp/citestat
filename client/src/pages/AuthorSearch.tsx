@@ -6,7 +6,7 @@ import { Tooltip } from "../components/Tooltip";
 
 /**
  * Author search result row adding more properties to author type interface
- * 
+ *
  */
 interface AuthorWithCount extends AuthorType {
 	publicationDOIs: string[];

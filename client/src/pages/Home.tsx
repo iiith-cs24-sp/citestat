@@ -39,7 +39,7 @@ const shuffleIcon = (
 /**
  * react component for application home page
  * Landing page of our site.
- * @returns 
+ * @returns
  */
 export const Home: React.FC = () => {
 	const [rng, setRng] = useState<boolean>(false);
