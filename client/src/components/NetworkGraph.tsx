@@ -113,6 +113,9 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({
 				onNodePointerOut={onNodePointerOut}
 				onNodeClick={onNodeClick}
 				theme={darkMode ? darkTheme : lightTheme}
+				glOptions={{
+					powerPreference: "high-performance",
+				}}
 			/>
 		</div>
 	);
