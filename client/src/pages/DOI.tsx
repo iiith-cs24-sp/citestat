@@ -7,6 +7,7 @@ import { CSLData } from "../models/CslJson";
 
 // Load Citation.js
 import "@citation-js/plugin-doi";
+// @ts-expect-error Citation.js is not typed
 import { Cite } from "@citation-js/core";
 import { YearCitationChart } from "../components/YearCitationChart";
 
