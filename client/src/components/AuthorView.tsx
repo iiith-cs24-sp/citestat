@@ -1,6 +1,7 @@
 import { Work } from "../types";
 import { Link } from "react-router-dom";
 import { Tooltip } from "./Tooltip";
+import { WorkCharts } from "./WorkCharts";
 
 interface AuthorViewProps {
 	name: string;
@@ -77,6 +78,7 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 					})()}
 				</p>
 			</div>
+			<WorkCharts works={works} />
 			<div className="flex items-center justify-between my-4">
 				<h3 className="text-2xl font-medium">Works</h3>
 				<Tooltip

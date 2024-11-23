@@ -3,7 +3,6 @@ import Searchbar from "../components/Searchbar";
 import { Work } from "../types";
 import AuthorView from "../components/AuthorView";
 import { useSearchParams } from "react-router-dom";
-import { WorkCharts } from "../components/WorkCharts";
 
 /**
  *  Author page React functional component
@@ -72,7 +71,6 @@ export const AuthorPage: React.FC = () => {
 					works: works,
 				})
 			)}
-			{works && < WorkCharts works={works} />}
 		</div>
 	);
 };
