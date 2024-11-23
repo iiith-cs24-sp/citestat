@@ -41,7 +41,21 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 				/>
 			</div>
 			{orcid && <p className="text-xl mb-4">ORCID: {orcid}</p>}
-			<h3 className="text-2xl font-medium mb-4">Metrics</h3>
+			<div className="flex items-center justify-between mb-4">
+				<h3 className="text-2xl font-medium">Metrics</h3>
+				<Tooltip
+					className="dropdown-end"
+					title="Source"
+					content={() => {
+						return (
+							<p>
+								Metrics are ⚠️calculated locally⚠️ from the
+								works listed.
+							</p>
+						);
+					}}
+				/>
+			</div>
 			<div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
 				<p className="text-lg">Total Works: {works.length}</p>
 				<p className="text-lg">
