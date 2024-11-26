@@ -57,7 +57,7 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 					}}
 				/>
 			</div>
-			<div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+			<div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
 				<p className="text-lg">Total Works: {works.length}</p>
 				<p className="text-lg">
 					Total Citations:{" "}
@@ -75,6 +75,29 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 							.sort((a, b) => b - a)
 							.findIndex((count, index) => count <= index);
 						return hIndex === -1 ? works.length : hIndex;
+					})()}
+				</p>
+				<p className="text-lg">
+					M-Quotient{" "}
+					{(() => {
+						const hIndex = works
+							.map((work) => work["is-referenced-by-count"] ?? 0)
+							.sort((a, b) => b - a)
+							.findIndex((count, index) => count <= index);
+						hIndex === -1 ? works.length : hIndex;
+
+						const yearSet = new Set<number>();
+						const currYear = new Date().getFullYear();
+						works.forEach((work) => {
+							const year =
+								work.issued?.["date-parts"]?.[0]?.[0] || // Use issued date
+								work.created.getYear(); // Fallback to created date
+							yearSet.add(year);
+						});
+						const yearsActive = currYear - Math.min(...yearSet) + 1;
+						const mQ = hIndex / yearsActive;
+
+						return mQ;
 					})()}
 				</p>
 			</div>

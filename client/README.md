@@ -11,6 +11,14 @@
     Attention is all you need (inspiration behind chat GPT)"10.48550/arXiv.1706.03762"
   ORCIDs
 
+# Impact metrics
+
+  # H index
+  
+  # M quotient
+    
+
+
 # Helpful reference resources
 
 ## Crossref API
