@@ -10,7 +10,12 @@
     Example from opencitations example page :"10.1002/adfm.201505328"
     Attention is all you need (inspiration behind chat GPT)"10.48550/arXiv.1706.03762"
   ORCIDs
+# Impact metrics
 
+  H index 
+  The h-index is defined as the maximum value of h such that the given author has published at least h papers that have each been cited at least h times. For example, if an author has five publications with 9, 7, 6, 2, and 1 citations respectively, then the author's h-index is 3 because the author has three publications with 3 or more citations
+  M quotient
+  : H index divided by number of years since first publication by the author.
 # Helpful reference resources
 
 ## Crossref API
@@ -30,6 +35,10 @@
   
 ## Chart js (IN USE : FOR YEARWISE CITATION HISTOGRAM)
   https://www.chartjs.org/docs/latest/
+
+
+## Library used for network graph 
+  https://reagraph.dev/
 ## D3.js (may use , for chart and network graphs)
   https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js
   https://2019.wattenberger.com/blog/react-and-d3
