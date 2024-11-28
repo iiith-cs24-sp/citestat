@@ -18,10 +18,5 @@
 		"concurrently": "^6.3.0",
 		"prettier": "^3.3.3"
 	},
-	"dependencies": {
-		"chart.js": "^4.4.6",
-		"chartjs": "^0.3.24",
-		"react-chartjs-2": "^5.2.0",
-		"reagraph": "^4.19.5"
-	}
+	"dependencies": {}
 }
