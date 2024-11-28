@@ -83,7 +83,6 @@ export const AltmetricsChart: React.FC<AltmetricsChartProps> = ({ doi }) => {
 				labels: ["Scientists", "Public", "Community", "Doctors"],
 				datasets: [
 					{
-						label: "Cohorts",
 						data: [
 							data!.cohorts.sci,
 							data!.cohorts.pub,
