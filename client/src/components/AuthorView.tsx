@@ -42,7 +42,7 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 	return (
 		<div className="mb-8">
 			<div className="flex items-center justify-between mb-6">
-				<h2 className="text-3xl font-medium">{name}</h2>
+				<h2 className="text-3xl font-bold">{name}</h2>
 				<Tooltip
 					className="dropdown-end"
 					title="Data Source"
@@ -94,6 +94,9 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 				<p className="text-lg">
 					M-Quotient: {getMQuotient(hIndex, works).toFixed(2)}
 				</p>
+			</div>
+			<div className="flex items-center justify-between my-4">
+				<h3 className="text-2xl font-medium">Work Charts</h3>
 			</div>
 			<WorkCharts works={works} />
 			<div className="flex items-center justify-between my-4">

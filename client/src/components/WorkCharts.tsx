@@ -190,36 +190,31 @@ export const WorkCharts: React.FC<WorkChartsProps> = ({ works }) => {
 	}, [works]);
 
 	return (
-		<div className="p-8">
-			<h1 className="text-2xl font-bold mb-6 text-center">Work Charts</h1>
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-				<div className="chart-container">
-					<h3 className="text-lg font-medium mb-2">
-						Publications Over Time
-					</h3>
-					<canvas
-						id="yearChart"
-						className="text-secondary accent-primary"
-					></canvas>
-				</div>
-				<div className="chart-container">
-					<h3 className="text-lg font-medium mb-2">
-						Works by Publisher
-					</h3>
-					<canvas
-						id="publisherChart"
-						className="text-secondary accent-primary"
-					></canvas>
-				</div>
-				<div className="chart-container">
-					<h3 className="text-lg font-medium mb-2">
-						Top Works by Citation Count
-					</h3>
-					<canvas
-						id="citationChart"
-						className="text-secondary accent-primary"
-					></canvas>
-				</div>
+		<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+			<div className="chart-container">
+				<h3 className="text-lg font-medium mb-2">
+					Publications Over Time
+				</h3>
+				<canvas
+					id="yearChart"
+					className="text-secondary accent-primary"
+				></canvas>
+			</div>
+			<div className="chart-container">
+				<h3 className="text-lg font-medium mb-2">Works by Publisher</h3>
+				<canvas
+					id="publisherChart"
+					className="text-secondary accent-primary"
+				></canvas>
+			</div>
+			<div className="chart-container">
+				<h3 className="text-lg font-medium mb-2">
+					Top Works by Citation Count
+				</h3>
+				<canvas
+					id="citationChart"
+					className="text-secondary accent-primary"
+				></canvas>
 			</div>
 		</div>
 	);
