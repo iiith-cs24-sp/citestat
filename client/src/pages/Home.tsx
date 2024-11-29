@@ -36,6 +36,9 @@ const shuffleIcon = (
 	</svg>
 );
 
+// Import svg file. import is required for bundling
+import logo_path from "../../icons/logo.svg";
+
 /**
  * react component for application home page
  * Landing page of our site.
@@ -56,9 +59,16 @@ export const Home: React.FC = () => {
 			<div className="hero">
 				<div className="hero-content text-center py-36">
 					<div className="max-w-md">
-						<h1 className="text-7xl font-medium">Citestat</h1>
+						<h1 className="text-7xl font-medium gap-0 flex items-center justify-center">
+							<img
+								src={logo_path}
+								alt="logo"
+								className="w-20 h-20"
+							/>
+							itestat
+						</h1>
 						<p className="text-neutral-500 text-xl">
-							See your impact on the world.
+							See your impact on the world
 						</p>
 						<Searchbar initialQuery={""} />
 					</div>
