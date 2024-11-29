@@ -10,7 +10,6 @@ import { AuthorSearch } from "./pages/AuthorSearch";
 import { DOI } from "./pages/DOI";
 import { ORCID } from "./pages/ORCID";
 import { AuthorPage } from "./pages/AuthorPage";
-import { YearCitationChart } from "./components/YearCitationChart";
 
 /**
  * Main App object with frontend routes
@@ -18,9 +17,9 @@ import { YearCitationChart } from "./components/YearCitationChart";
 function App() {
 	return (
 		<Router>
-			<div className="navbar bg-primary justify-evenly">
+			<div className="navbar bg-neutral justify-evenly">
 				<Link
-					className="btn btn-ghost text-4xl text-primary-content font-medium"
+					className="btn btn-ghost text-4xl text-neutral-content font-medium"
 					to="/"
 				>
 					Citestat
