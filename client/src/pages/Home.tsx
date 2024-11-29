@@ -37,7 +37,7 @@ const shuffleIcon = (
 );
 
 // Import svg file. import is required for bundling
-import logo_path from "../../icons/logo.svg";
+import logo_path from "../../icons/logo_optimized.svg";
 
 /**
  * react component for application home page
@@ -62,7 +62,7 @@ export const Home: React.FC = () => {
 						<h1 className="text-7xl font-medium gap-0 flex items-center justify-center">
 							<img
 								src={logo_path}
-								alt="logo"
+								alt="citestat logo - a sunburst chart in the shape of a C"
 								className="w-20 h-20"
 							/>
 							itestat
