@@ -27,6 +27,7 @@ export const Tooltip: React.FC<{
 			<div
 				tabIndex={0}
 				role="button"
+				aria-label="Tooltip opener"
 				className="btn btn-circle btn-ghost btn-xs text-info"
 			>
 				{infoIcon}
