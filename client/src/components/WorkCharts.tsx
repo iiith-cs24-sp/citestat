@@ -27,7 +27,7 @@ export const WorkCharts: React.FC<WorkChartsProps> = ({ works }) => {
 			works.forEach((work) => {
 				const year =
 					work.issued?.["date-parts"]?.[0]?.[0] || // Use issued date
-					work.created.getYear(); // Fallback to created date
+					work.created["date-parts"]?.[0]?.[0]; // Fall back to created date
 				yearMap.set(year, (yearMap.get(year) || 0) + 1);
 			});
 			// Now, mark years with no publications as 0
