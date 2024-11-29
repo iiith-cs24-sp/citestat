@@ -62,8 +62,8 @@ export const Home: React.FC = () => {
 						<h1 className="text-7xl font-medium gap-0 flex items-center justify-center">
 							<img
 								src={logo_path}
-								alt="citestat logo - a sunburst chart in the shape of a C"
-								className="w-20 h-20"
+								alt="C"
+								className="w-20 h-20 font-extrabold"
 							/>
 							itestat
 						</h1>

@@ -13,31 +13,6 @@ import { Cite } from "@citation-js/core";
 import { YearCitationChart } from "../components/YearCitationChart";
 import { AltmetricsChart } from "../components/AltmetricsChart";
 
-const sampleAltmetricsData = {
-	cohorts: {
-		sci: 122,
-		pub: 1726,
-		com: 39,
-		doc: 20,
-	},
-	history: {
-		"1 Year": 564.23,
-		"6 Months": 207.85,
-		"3 Months": 157.75,
-		"1 Month": 44.75,
-		"1 Week": 8,
-	},
-	cited_by: {
-		tweeters: 1912,
-		news: 174,
-		feeds: 20,
-		facebook: 2,
-		reddit: 1,
-		wikipedia: 6,
-		policies: 5,
-	},
-};
-
 const DoiView: React.FC<CSLData> = (cslData: CSLData) => {
 	console.log(cslData);
 	return (
