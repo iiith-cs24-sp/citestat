@@ -67,7 +67,7 @@ export const Home: React.FC = () => {
 							/>
 							itestat
 						</h1>
-						<p className="text-neutral-500 text-xl">
+						<p className="font-light text-xl">
 							See your impact on the world
 						</p>
 						<Searchbar initialQuery={""} />
