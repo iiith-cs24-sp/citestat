@@ -26,40 +26,59 @@ interface DoiNetworkProps {
 	n: number;
 }
 
-const citationRequestCache = new Map<string, Citation[]>();
-const referenceRequestCache = new Map<string, Citation[]>();
+async function fetchWithCache(url: string, abortController: AbortController) {
+	let cache: Cache | null = null;
+	// Cache is available only in secure contexts
+	if (window.isSecureContext) {
+		cache = await caches.open("doi-network-cache");
+		const cachedResponse = await cache.match(url);
+		const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+		const expiresIn = oneDayInMilliseconds;
+
+		if (cachedResponse) {
+			const cachedDate = new Date(
+				cachedResponse.headers.get("sw-cache-date") || 0,
+			);
+			const now = new Date();
+
+			if (now.getTime() - cachedDate.getTime() < expiresIn) {
+				return cachedResponse.json();
+			} else {
+				// Cache is stale, delete it
+				await cache.delete(url);
+			}
+		}
+	}
+
+	const response = await fetch(url, { signal: abortController.signal });
+	if (response.ok) {
+		const clonedResponse = response.clone();
+		const headers = new Headers(clonedResponse.headers);
+		headers.append("sw-cache-date", new Date().toISOString());
+
+		const responseWithHeaders = new Response(clonedResponse.body, {
+			status: clonedResponse.status,
+			statusText: clonedResponse.statusText,
+			headers: headers,
+		});
+
+		await cache?.put(url, responseWithHeaders);
+		return response.json();
+	}
+
+	throw new Error("Network response was not ok.");
+}
 
 async function fetchCitations(doi: string, abortController: AbortController) {
-	if (citationRequestCache.has(doi)) {
-		return citationRequestCache.get(doi)!;
-	}
-	const res = await fetch(
-		`https://opencitations.net/index/api/v2/citations/doi:${doi}`,
-		{ signal: abortController.signal },
-	);
-	if (!res.ok) {
-		return [];
-	}
-	const data = await res.json();
-	citationRequestCache.set(doi, data);
-	return data as Citation[];
+	const url = `https://opencitations.net/index/api/v2/citations/doi:${doi}`;
+	return fetchWithCache(url, abortController);
 }
 
 async function fetchReferences(doi: string, abortController: AbortController) {
-	if (referenceRequestCache.has(doi)) {
-		return referenceRequestCache.get(doi)!;
-	}
-	const res = await fetch(
-		`https://opencitations.net/index/api/v2/references/doi:${doi}`,
-		{ signal: abortController.signal },
-	);
-	if (!res.ok) {
-		return [];
-	}
-	const data = await res.json();
-	referenceRequestCache.set(doi, data);
-	return data as Citation[];
+	const url = `https://opencitations.net/index/api/v2/references/doi:${doi}`;
+	return fetchWithCache(url, abortController);
 }
+
 /**
  * DOI Network graph corresponding to DOI for a publication
  * @param props.doi doi string pointing to the publication
