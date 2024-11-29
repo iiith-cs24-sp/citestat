@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Searchbar from "../components/Searchbar";
 import { Tooltip } from "../components/Tooltip";
-import { DoiNetwork } from "../components/DoiNetwork";
 import { CSLData } from "../models/CslJson";
+import { lazy, Suspense } from "react";
+const DoiNetwork = lazy(() => import("../components/DoiNetwork"));
 
 // Load Citation.js
 import "@citation-js/plugin-doi";
@@ -221,7 +222,11 @@ export const DOI: React.FC = () => {
 					<option value="3">Level 3</option>
 				</select>
 			</div>
-			<DoiNetwork doi={query} n={level} />
+			<Suspense
+				fallback={<div className="skeleton h-96 w-full rounded"></div>}
+			>
+				<DoiNetwork doi={query} n={level} />
+			</Suspense>
 			<div className="my-6 flex items-center justify-between">
 				<h3 className="text-2xl font-medium">Yearwise Citations</h3>
 				<Tooltip

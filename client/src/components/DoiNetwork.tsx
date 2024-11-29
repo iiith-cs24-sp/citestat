@@ -380,3 +380,5 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 		</div>
 	);
 };
+
+export default DoiNetwork;
