@@ -1,6 +1,28 @@
 import { Work } from "../types";
 import { Link } from "react-router-dom";
 import { Tooltip } from "./Tooltip";
+import { WorkCharts } from "./WorkCharts";
+
+function getHIndex(works: Work[]): number {
+	const sortedCitations = works
+		.map((work) => work["is-referenced-by-count"] ?? 0)
+		.sort((a, b) => b - a);
+	const hIndex = sortedCitations.findIndex((count, index) => count <= index);
+	return hIndex === -1 ? works.length : hIndex;
+}
+function getMQuotient(hIndex: number, works: Work[]): number {
+	const yearSet = new Set<number>();
+	const currYear = new Date().getFullYear();
+	works.forEach((work) => {
+		const year =
+			work.issued?.["date-parts"]?.[0]?.[0] || // Use issued date
+			work.created["date-parts"]?.[0]?.[0]; // Fall back to created date
+		yearSet.add(year);
+	});
+	const yearsActive = currYear - Math.min(...yearSet) + 1;
+	const mQ = hIndex / yearsActive;
+	return mQ;
+}
 
 interface AuthorViewProps {
 	name: string;
@@ -15,10 +37,12 @@ interface AuthorViewProps {
  * @returns React component displaying data for author
  */
 const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
+	const hIndex = getHIndex(works);
+
 	return (
 		<div className="mb-8">
 			<div className="flex items-center justify-between mb-6">
-				<h2 className="text-3xl font-medium">{name}</h2>
+				<h2 className="text-3xl font-bold">{name}</h2>
 				<Tooltip
 					className="dropdown-end"
 					title="Data Source"
@@ -56,7 +80,7 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 					}}
 				/>
 			</div>
-			<div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+			<div className="grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
 				<p className="text-lg">Total Works: {works.length}</p>
 				<p className="text-lg">
 					Total Citations:{" "}
@@ -66,17 +90,15 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 						0,
 					)}
 				</p>
+				<p className="text-lg">H-Index: {hIndex}</p>
 				<p className="text-lg">
-					H-Index:{" "}
-					{(() => {
-						const hIndex = works
-							.map((work) => work["is-referenced-by-count"] ?? 0)
-							.sort((a, b) => b - a)
-							.findIndex((count, index) => count <= index);
-						return hIndex === -1 ? works.length : hIndex;
-					})()}
+					M-Quotient: {getMQuotient(hIndex, works).toFixed(2)}
 				</p>
 			</div>
+			<div className="flex items-center justify-between my-4">
+				<h3 className="text-2xl font-medium">Work Charts</h3>
+			</div>
+			<WorkCharts works={works} />
 			<div className="flex items-center justify-between my-4">
 				<h3 className="text-2xl font-medium">Works</h3>
 				<Tooltip

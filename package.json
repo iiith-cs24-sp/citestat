@@ -9,7 +9,7 @@
 	"scripts": {
 		"install": "concurrently \"cd ./server && npm i\" \"cd ./client && npm i\"",
 		"start": "concurrently \"cd ./server && npm run start\" \"cd ./client && npm run dev\"",
-		"delete-modules": "rm -r ./node_modules && cd ./server && rm -r ./node_modules && cd ../client && rm -r ./node_modules",
+		"delete-modules": "rm -r ./node_modules || cd ./server && rm -r ./node_modules || cd ../client && rm -r ./node_modules",
 		"check-format": "prettier . --check",
 		"format": "prettier . --write",
 		"doc": "cd ./client && npx typedoc --skipErrorChecking"
@@ -18,10 +18,5 @@
 		"concurrently": "^6.3.0",
 		"prettier": "^3.3.3"
 	},
-	"dependencies": {
-		"chart.js": "^4.4.6",
-		"chartjs": "^0.3.24",
-		"react-chartjs-2": "^5.2.0",
-		"reagraph": "^4.19.5"
-	}
+	"dependencies": {}
 }
