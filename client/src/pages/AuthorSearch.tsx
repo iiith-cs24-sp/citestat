@@ -13,8 +13,8 @@ interface AuthorWithCount extends AuthorType {
 	publicationCount: number;
 }
 /**
- * @property authors : A single row from rows of search results 
- =*@property loading : loading status
+ * @property authors : A single row from rows of search results
+ * @property loading : loading status
  * @property error: whether there was some error in fetching api results
  *  @returns Search results for author name
  */
