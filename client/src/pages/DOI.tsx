@@ -176,6 +176,7 @@ export const DOI: React.FC = () => {
 					/>
 				</h3>
 				<select
+					aria-label="Select level of citation network"
 					className="select select-bordered w-full max-w-xs"
 					onChange={(e) => {
 						const value = parseInt(e.target.value);
