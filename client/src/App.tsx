@@ -26,7 +26,7 @@ function App() {
 					Citestat
 				</Link>
 			</header>
-			<div className="container mx-auto px-4 font-jost">
+			<main className="container mx-auto px-4 font-jost">
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/search" element={<AuthorSearch />} />
@@ -35,7 +35,7 @@ function App() {
 					<Route path="/author" element={<AuthorPage />} />
 					<Route path="*" element={<Navigate to="/" />} />
 				</Routes>
-			</div>
+			</main>
 		</Router>
 	);
 }
