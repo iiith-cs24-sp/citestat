@@ -70,9 +70,9 @@ export const AuthorSearch: React.FC = () => {
 		<div className="p-8">
 			<Searchbar initialQuery={query} />
 			<div className="flex items-center justify-between">
-				<h2 className="text-3xl font-medium mb-6">
+				<h1 className="text-3xl font-medium mb-6">
 					Authors matching "{query}"
-				</h2>
+				</h1>
 				<Tooltip
 					className="dropdown-end"
 					title="Data Source"

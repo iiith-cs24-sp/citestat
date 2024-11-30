@@ -42,7 +42,7 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 	return (
 		<div className="mb-8">
 			<div className="flex items-center justify-between mb-6">
-				<h2 className="text-3xl font-bold">{name}</h2>
+				<h1 className="text-3xl font-bold">{name}</h1>
 				<Tooltip
 					className="dropdown-end"
 					title="Data Source"
@@ -66,7 +66,7 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 			</div>
 			{orcid && <p className="text-xl mb-4">ORCID: {orcid}</p>}
 			<div className="flex items-center justify-between mb-4">
-				<h3 className="text-2xl font-medium">Metrics</h3>
+				<h2 className="text-2xl font-medium">Metrics</h2>
 				<Tooltip
 					className="dropdown-end"
 					title="Source"
@@ -96,11 +96,11 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 				</p>
 			</div>
 			<div className="flex items-center justify-between my-4">
-				<h3 className="text-2xl font-medium">Work Charts</h3>
+				<h2 className="text-2xl font-medium">Work Charts</h2>
 			</div>
 			<WorkCharts works={works} />
 			<div className="flex items-center justify-between my-4">
-				<h3 className="text-2xl font-medium">Works</h3>
+				<h2 className="text-2xl font-medium">Works</h2>
 				<Tooltip
 					className="dropdown-end"
 					title="All works not listed?"
@@ -138,9 +138,9 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 						key={work.DOI}
 					>
 						<div className="card-body overflow-auto">
-							<h4 className="text-xl font-medium">
+							<h3 className="text-xl font-medium">
 								{work.title}
-							</h4>
+							</h3>
 							<p className="text-lg flex justify-between">
 								Publisher: {work.publisher}
 								{work.published ? (

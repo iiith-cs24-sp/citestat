@@ -18,11 +18,11 @@ const DoiView: React.FC<CSLData> = (cslData: CSLData) => {
 	return (
 		<div className="grid grid-cols-2 gap-4">
 			<div>
-				<h3 className="text-xl font-medium mb-2">Title</h3>
+				<h2 className="text-xl font-medium mb-2">Title</h2>
 				<p className="text-lg">{cslData.title}</p>
 			</div>
 			<div>
-				<h3 className="text-xl font-medium mb-2">Authors</h3>
+				<h2 className="text-xl font-medium mb-2">Authors</h2>
 				<ul>
 					{cslData.author?.map((author, index) => (
 						<li key={index}>
@@ -32,19 +32,19 @@ const DoiView: React.FC<CSLData> = (cslData: CSLData) => {
 				</ul>
 			</div>
 			<div>
-				<h3 className="text-xl font-medium mb-2">Published</h3>
+				<h2 className="text-xl font-medium mb-2">Published</h2>
 				<p>{cslData.issued?.["date-parts"]?.flat().join("/")}</p>
 			</div>
 			<div>
-				<h3 className="text-xl font-medium mb-2">DOI</h3>
+				<h2 className="text-xl font-medium mb-2">DOI</h2>
 				<p>{cslData.DOI}</p>
 			</div>
 			<div>
-				<h3 className="text-xl font-medium mb-2">Publisher</h3>
+				<h2 className="text-xl font-medium mb-2">Publisher</h2>
 				<p>{cslData.publisher}</p>
 			</div>
 			<div>
-				<h3 className="text-xl font-medium mb-2">URL</h3>
+				<h2 className="text-xl font-medium mb-2">URL</h2>
 				<p>
 					<a
 						href={cslData.URL}
@@ -57,7 +57,7 @@ const DoiView: React.FC<CSLData> = (cslData: CSLData) => {
 				</p>
 			</div>
 			<div>
-				<h3 className="text-xl font-medium mb-2">Reference Count</h3>
+				<h2 className="text-xl font-medium mb-2">Reference Count</h2>
 				<p>
 					{(cslData["citation-number"] ||
 						cslData["reference-count"]) ?? // Crossref uses reference count
@@ -65,7 +65,7 @@ const DoiView: React.FC<CSLData> = (cslData: CSLData) => {
 				</p>
 			</div>
 			<div>
-				<h3 className="text-xl font-medium mb-2">Cited By Count</h3>
+				<h2 className="text-xl font-medium mb-2">Cited By Count</h2>
 				<p>
 					{
 						cslData["is-referenced-by-count"] ?? "unknown" // Crossref
@@ -116,13 +116,13 @@ export const DOI: React.FC = () => {
 	}, [data, query]);
 
 	if (error)
-		return <h2 className="text-3xl font-medium mb-6">Error: {error}</h2>;
+		return <h1 className="text-3xl font-medium mb-6">Error: {error}</h1>;
 
 	return (
 		<div className="p-8">
 			<Searchbar initialQuery={query} />
 			<div className="flex items-center justify-between">
-				<h2 className="text-3xl font-medium mb-6">DOI "{query}"</h2>
+				<h1 className="text-3xl font-medium mb-6">DOI "{query}"</h1>
 				<Tooltip
 					className="dropdown-end"
 					title="Data Source for DOI information"
@@ -152,8 +152,8 @@ export const DOI: React.FC = () => {
 				DoiView(data)
 			)}
 			<div className="my-6 flex items-center justify-between">
-				<h3 className="text-2xl font-medium">
-					Citation Network
+				<span className="flex">
+					<h2 className="text-2xl font-medium">Citation Network</h2>
 					<Tooltip
 						className="dropdown-right"
 						title="Citation Network"
@@ -174,7 +174,7 @@ export const DOI: React.FC = () => {
 							);
 						}}
 					/>
-				</h3>
+				</span>
 				<select
 					aria-label="Select level of citation network"
 					className="select select-bordered w-full max-w-xs"
@@ -204,7 +204,7 @@ export const DOI: React.FC = () => {
 				<DoiNetwork doi={query} n={level} />
 			</Suspense>
 			<div className="my-6 flex items-center justify-between">
-				<h3 className="text-2xl font-medium">Yearwise Citations</h3>
+				<h2 className="text-2xl font-medium">Yearwise Citations</h2>
 				<Tooltip
 					className="dropdown-end"
 					title="Yearwise Citations"
@@ -228,7 +228,7 @@ export const DOI: React.FC = () => {
 			</div>
 			<YearCitationChart doi={query} />
 			<div className="my-6 flex items-center justify-between">
-				<h3 className="text-2xl font-medium">Altmetrics</h3>
+				<h2 className="text-2xl font-medium">Altmetrics</h2>
 				<Tooltip
 					className="dropdown-end"
 					title="Altmetrics"

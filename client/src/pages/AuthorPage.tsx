@@ -58,7 +58,7 @@ export const AuthorPage: React.FC = () => {
 	}, [name]);
 
 	if (error)
-		return <h2 className="text-3xl font-medium mb-6">Error: {error}</h2>;
+		return <h1 className="text-3xl font-medium mb-6">Error: {error}</h1>;
 
 	return (
 		<div className="p-8">

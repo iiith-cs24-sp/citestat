@@ -205,7 +205,7 @@ export const AltmetricsChart: React.FC<AltmetricsChartProps> = ({ doi }) => {
 					</div>
 				</div>
 			)}
-			{!show && <h2>No Altmetrics found for this publication</h2>}
+			{!show && <h1>No Altmetrics found for this publication</h1>}
 		</div>
 	);
 };

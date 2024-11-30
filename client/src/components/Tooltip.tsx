@@ -37,7 +37,7 @@ export const Tooltip: React.FC<{
 				className="card compact dropdown-content bg-base-100 rounded-box z-[1] w-64 shadow"
 			>
 				<div tabIndex={0} className="card-body">
-					<h3 className="card-title">{props.title}</h3>
+					<div className="card-title">{props.title}</div>
 					{props.content({})}
 				</div>
 			</div>

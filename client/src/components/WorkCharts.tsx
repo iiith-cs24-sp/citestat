@@ -192,25 +192,25 @@ export const WorkCharts: React.FC<WorkChartsProps> = ({ works }) => {
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 			<div className="chart-container">
-				<h3 className="text-lg font-medium mb-2">
+				<h2 className="text-lg font-medium mb-2">
 					Publications Over Time
-				</h3>
+				</h2>
 				<canvas
 					id="yearChart"
 					className="text-secondary accent-primary"
 				></canvas>
 			</div>
 			<div className="chart-container">
-				<h3 className="text-lg font-medium mb-2">Works by Publisher</h3>
+				<h2 className="text-lg font-medium mb-2">Works by Publisher</h2>
 				<canvas
 					id="publisherChart"
 					className="text-secondary accent-primary"
 				></canvas>
 			</div>
 			<div className="chart-container">
-				<h3 className="text-lg font-medium mb-2">
+				<h2 className="text-lg font-medium mb-2">
 					Top Works by Citation Count
-				</h3>
+				</h2>
 				<canvas
 					id="citationChart"
 					className="text-secondary accent-primary"
