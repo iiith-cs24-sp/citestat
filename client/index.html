@@ -51,7 +51,36 @@
 		<!-- Open Graph End -->
 	</head>
 	<body>
+		<noscript>
+			<div class="bg-error p-4 text-center w-full">
+				<p class="text-xl font-mono font-extrabold text-error-content">
+					Please enable JavaScript to use this web app.
+				</p>
+			</div>
+		</noscript>
 		<div id="root"></div>
+		<footer
+			class="footer footer-center bg-base-300 text-base-content p-4 fixed bottom-0"
+		>
+			<aside>
+				<p>
+					This web app is open-source. You can find the source on
+					<a
+						href="https://github.com/iiith-cs24-sp/citestat"
+						target="_blank"
+						class="link"
+					>
+						GitHub
+						<img
+							src="/github-mark.svg"
+							alt="Octocat icon"
+							class="w-6 h-6 inline align-bottom filter dark:invert"
+							id="github-icon"
+						/>
+					</a>
+				</p>
+			</aside>
+		</footer>
 		<script type="module" src="/src/main.tsx"></script>
 	</body>
 </html>

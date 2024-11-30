@@ -17,14 +17,14 @@ import { AuthorPage } from "./pages/AuthorPage";
 function App() {
 	return (
 		<Router>
-			<div className="navbar bg-neutral justify-evenly">
+			<header className="navbar bg-neutral justify-evenly">
 				<Link
 					className="btn btn-ghost text-4xl text-neutral-content font-medium"
 					to="/"
 				>
 					Citestat
 				</Link>
-			</div>
+			</header>
 			<div className="container mx-auto px-4 font-jost">
 				<Routes>
 					<Route path="/" element={<Home />} />
