@@ -130,7 +130,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 						abortController,
 					);
 					citationLevel.push(...citations);
-					citations.forEach((citation) => {
+					citations.forEach((citation: Citation) => {
 						const citingDoi =
 							citation.citing
 								.split(" ")
@@ -157,7 +157,7 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 						abortController,
 					);
 					referenceLevel.push(...references);
-					references.forEach((reference) => {
+					references.forEach((reference: Citation) => {
 						const citedDoi =
 							reference.cited
 								.split(" ")
