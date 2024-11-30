@@ -17,7 +17,7 @@ interface GraphControlsProps {
 }
 
 const GraphControls = forwardRef<GraphCanvasRef, GraphControlsProps>(
-	(props, ref) => {
+	(_props, ref) => {
 		return (
 			<div className="flex flex-row justify-between items-center">
 				<button
