@@ -74,3 +74,5 @@ export const AuthorPage: React.FC = () => {
 		</div>
 	);
 };
+
+export default AuthorPage;

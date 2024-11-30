@@ -129,3 +129,5 @@ export const AuthorSearch: React.FC = () => {
 		</div>
 	);
 };
+
+export default AuthorSearch;

@@ -253,3 +253,5 @@ export const DOI: React.FC = () => {
 		</div>
 	);
 };
+
+export default DOI;

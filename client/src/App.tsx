@@ -6,10 +6,11 @@ import {
 	Navigate,
 } from "react-router-dom";
 import { Home } from "./pages/Home";
-import { AuthorSearch } from "./pages/AuthorSearch";
-import { DOI } from "./pages/DOI";
-import { ORCID } from "./pages/ORCID";
-import { AuthorPage } from "./pages/AuthorPage";
+import React from "react";
+const AuthorSearch = React.lazy(() => import("./pages/AuthorSearch"));
+const DOI = React.lazy(() => import("./pages/DOI"));
+const ORCID = React.lazy(() => import("./pages/ORCID"));
+const AuthorPage = React.lazy(() => import("./pages/AuthorPage"));
 
 /**
  * Main App object with frontend routes
