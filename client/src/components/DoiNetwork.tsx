@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { NetworkGraph } from "./NetworkGraph";
-import { GraphEdge, GraphNode } from "reagraph";
+import { GraphEdge, GraphNode, LayoutTypes } from "reagraph";
 import { Citation } from "../models/Citation";
+import * as ComLink from "comlink";
+import { GraphWorkerInput } from "../models/GraphWorkerIO";
+import type { WorkerApi } from "../workers/workerApi";
 
-/**
- * Generate a colour based on a number, e.g., -2, -1, 0, 1, 2, 3, ...
- * @param num Number to generate a colour from
- * @param isDarkMode Whether the colour should be generated for dark mode
- * @returns Colour string
- */
-const colourFromNumber = (num: number, isDarkMode: boolean = false): string => {
-	const hue = ((num + 3) / 7.0) * 359;
-	const saturation = 100;
-	const lightness = isDarkMode ? 60 : 30;
-	const colorString = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-	return colorString;
-};
+const worker = new Worker(new URL("../workers/worker.js", import.meta.url), {
+	type: "module",
+});
+const workerApi = ComLink.wrap<typeof WorkerApi>(worker);
 
 /**
  * DOI page component that shows the works associated with a DOI
@@ -90,7 +84,9 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 	const [references, setReferences] = useState<Citation[][] | null>(null);
 	const [nodes, setNodes] = useState<GraphNode[]>([]);
 	const [edges, setEdges] = useState<GraphEdge[]>([]);
+	const [layout, setLayout] = useState<LayoutTypes>("hierarchicalTd");
 	const [loading, setLoading] = useState<boolean>(true);
+	const [computing, setComputing] = useState<boolean>(true);
 	const [stage, setStage] = useState<number>(0);
 	const [stageProgress, setStageProgress] = useState<number>(0);
 	const [isDarkMode, setDarkMode] = useState<boolean>(
@@ -203,146 +199,42 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 	// Update graph nodes and edges
 	useEffect(() => {
 		if (!citations || !references) return;
-
-		const validDOIs: Set<string> = new Set();
-		const validEdgeIDs: Set<string> = new Set();
-		const newNodes: Set<GraphNode> = new Set();
-		const newEdges: GraphEdge[] = [];
-		setDarkMode(
+		const darkMode =
 			getComputedStyle(document.documentElement).getPropertyValue(
 				"color-scheme",
-			) === "dark",
-		);
+			) === "dark";
+		setDarkMode(darkMode);
 
-		console.log("citations");
-		console.dir(citations);
-		console.log("references");
-		console.dir(references);
-
-		if (!validDOIs.has(doi)) {
-			newNodes.add({
-				id: doi,
-				label: doi,
-				fill: isDarkMode ? "#ffffff" : "#000000",
-				size: 10,
-				data: { level: 0 },
-			});
-			validDOIs.add(doi);
-		}
-
-		citations.forEach((citationLevel, level) => {
-			const fillColour = colourFromNumber(level + 1, isDarkMode);
-			citationLevel.forEach((citation) => {
-				const citingDoi =
-					citation.citing
-						.split(" ")
-						.find((ref) => ref.startsWith("doi:"))
-						?.slice(4) || "";
-				const citedDoi =
-					citation.cited
-						.split(" ")
-						.find((ref) => ref.startsWith("doi:"))
-						?.slice(4) || "";
-
-				if (citingDoi && citedDoi) {
-					if (!validDOIs.has(citingDoi)) {
-						newNodes.add({
-							id: citingDoi,
-							label: citingDoi,
-							fill: fillColour,
-							data: { level: level + 1 },
-						});
-						validDOIs.add(citingDoi);
-					}
-					if (!validDOIs.has(citedDoi)) {
-						newNodes.add({
-							id: citedDoi,
-							label: citedDoi,
-							fill: fillColour,
-							data: { level: level + 1 },
-						});
-						validDOIs.add(citedDoi);
-					}
-
-					if (!validEdgeIDs.has(`${citedDoi}-${citingDoi}`)) {
-						newEdges.push({
-							source: citedDoi,
-							target: citingDoi,
-							id: `${citedDoi}-${citingDoi}`,
-							label: `${citedDoi}->${citingDoi}`,
-							fill: colourFromNumber(3, isDarkMode),
-						});
-						validEdgeIDs.add(`${citedDoi}-${citingDoi}`);
-					}
-				}
-			});
-		});
-
-		references.forEach((referenceLevel, level) => {
-			const fillColour = colourFromNumber(-(level + 1), isDarkMode);
-			referenceLevel.forEach((reference) => {
-				const citingDoi =
-					reference.citing
-						.split(" ")
-						.find((ref) => ref.startsWith("doi:"))
-						?.slice(4) || "";
-				const citedDoi =
-					reference.cited
-						.split(" ")
-						.find((ref) => ref.startsWith("doi:"))
-						?.slice(4) || "";
-
-				if (citingDoi && citedDoi) {
-					if (!validDOIs.has(citingDoi)) {
-						newNodes.add({
-							id: citingDoi,
-							label: citingDoi,
-							fill: fillColour,
-							data: { level: -(level + 1) },
-						});
-						validDOIs.add(citingDoi);
-					}
-					if (!validDOIs.has(citedDoi)) {
-						newNodes.add({
-							id: citedDoi,
-							label: citedDoi,
-							fill: fillColour,
-							data: { level: -(level + 1) },
-						});
-						validDOIs.add(citedDoi);
-					}
-
-					if (!validEdgeIDs.has(`${citedDoi}-${citingDoi}`)) {
-						newEdges.push({
-							source: citedDoi,
-							target: citingDoi,
-							id: `${citedDoi}-${citingDoi}`,
-							label: `${citedDoi}->${citingDoi}`,
-							fill: colourFromNumber(0, isDarkMode),
-						});
-						validEdgeIDs.add(`${citedDoi}-${citingDoi}`);
-					}
-				}
-			});
-		});
-
-		console.dir(newNodes);
-		console.dir(newEdges);
-		setNodes(Array.from(newNodes));
-		setEdges(newEdges);
-	}, [doi, citations, references, isDarkMode]);
+		setComputing(true);
+		const data: GraphWorkerInput = {
+			doi,
+			citations,
+			references,
+			isDarkMode: darkMode,
+		};
+		console.log("Calling worker");
+		workerApi
+			.buildGraph(data)
+			.then(({ newNodes, newEdges, recommendedLayout }) => {
+				setNodes(newNodes);
+				setEdges(newEdges);
+				setLayout(recommendedLayout);
+				setComputing(false);
+			}, console.error);
+	}, [doi, citations, references]);
 
 	const graphWidth = "100%";
 	const graphHeight = 720;
 
 	return (
 		<div>
-			{!loading ? (
+			{!(loading || computing) ? (
 				<NetworkGraph
 					width={graphWidth}
 					height={graphHeight}
 					nodes={nodes}
 					edges={edges}
+					layout={layout}
 					onNodeClick={(node) => {
 						if (node.id !== doi)
 							window.open(

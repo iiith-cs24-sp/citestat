@@ -6,7 +6,6 @@ import {
 	GraphNode,
 	lightTheme,
 	darkTheme,
-	recommendLayout,
 	LayoutTypes,
 	CameraMode,
 	useSelection,
@@ -66,6 +65,7 @@ interface NetworkGraphProps {
 	height: number | string;
 	nodes: GraphNode[];
 	edges: GraphEdge[];
+	layout: LayoutTypes;
 	onNodeClick?: (node: GraphNode) => void;
 	darkMode?: boolean;
 }
@@ -82,11 +82,11 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({
 	height,
 	nodes,
 	edges,
+	layout,
 	onNodeClick,
 	darkMode = false,
 }) => {
 	const graphRef = useRef<GraphCanvasRef | null>(null);
-	const layout: LayoutTypes = recommendLayout(nodes, edges);
 	console.log(layout);
 	const [cameraMode, setCameraMode] = React.useState<CameraMode>("pan");
 	const { selections, actives, onNodePointerOver, onNodePointerOut } =
