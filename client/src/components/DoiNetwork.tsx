@@ -353,7 +353,10 @@ export const DoiNetwork: React.FC<DoiNetworkProps> = ({ doi, n }) => {
 					darkMode={isDarkMode}
 				/>
 			) : (
-				<div className="h-96 w-full rounded flex flex-col items-center justify-center">
+				<div
+					style={{ width: graphWidth, height: graphHeight }} // Avoid layout shift
+					className="rounded flex flex-col items-center justify-center"
+				>
 					<ul className="steps">
 						{[...Array(n)].map((_, i) => (
 							<li
