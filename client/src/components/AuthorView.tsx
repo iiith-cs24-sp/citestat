@@ -1,5 +1,5 @@
 import { Work } from "../types";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Tooltip } from "./Tooltip";
 import { WorkCharts } from "./WorkCharts";
 

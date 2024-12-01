@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import Searchbar from "../components/Searchbar";
 import { Author, Work } from "../types";
 import AuthorView from "../components/AuthorView";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import Searchbar from "../components/Searchbar";
 import { Tooltip } from "../components/Tooltip";
 import { CSLData } from "../models/CslJson";

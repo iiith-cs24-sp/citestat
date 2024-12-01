@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import Searchbar from "../components/Searchbar";
 import { Work } from "../types";
 import AuthorView from "../components/AuthorView";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 
 /**
  *  Author page React functional component

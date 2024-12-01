@@ -1,10 +1,4 @@
-import {
-	BrowserRouter as Router,
-	Route,
-	Routes,
-	Link,
-	Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link, Navigate } from "react-router";
 import { Home } from "./pages/Home";
 import React from "react";
 const AuthorSearch = React.lazy(() => import("./pages/AuthorSearch"));
@@ -17,7 +11,7 @@ const AuthorPage = React.lazy(() => import("./pages/AuthorPage"));
  */
 function App() {
 	return (
-		<Router>
+		<BrowserRouter>
 			<header className="navbar bg-neutral justify-evenly">
 				<Link
 					className="btn btn-ghost text-4xl text-neutral-content font-medium"
@@ -36,7 +30,7 @@ function App() {
 					<Route path="*" element={<Navigate to="/" />} />
 				</Routes>
 			</main>
-		</Router>
+		</BrowserRouter>
 	);
 }
 

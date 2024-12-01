@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router";
 import { CrossRefResponse, Author as AuthorType } from "../types";
 import Searchbar from "../components/Searchbar";
 import { Tooltip } from "../components/Tooltip";
