@@ -83,7 +83,7 @@ export const AuthorSearch: React.FC = () => {
 								<a
 									href="https://www.crossref.org/"
 									target="_blank"
-									rel="noreferrer"
+									rel="noopener nofollow"
 									className="link link-primary"
 								>
 									Crossref

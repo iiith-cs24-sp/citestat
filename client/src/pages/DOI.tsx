@@ -49,7 +49,7 @@ const DoiView: React.FC<CSLData> = (cslData: CSLData) => {
 					<a
 						href={cslData.URL}
 						target="_blank"
-						rel="noreferrer"
+						rel="noopener nofollow"
 						className="link link-primary"
 					>
 						{cslData.URL}
@@ -133,7 +133,7 @@ export const DOI: React.FC = () => {
 								<a
 									href="https://citation.js.org/"
 									target="_blank"
-									rel="noreferrer"
+									rel="noopener nofollow"
 									className="link link-primary"
 								>
 									Citation.js
@@ -164,7 +164,7 @@ export const DOI: React.FC = () => {
 									<a
 										href="https://opencitations.net/"
 										target="_blank"
-										rel="noreferrer"
+										rel="noopener nofollow"
 										className="link link-primary"
 									>
 										OpenCitations
@@ -215,7 +215,7 @@ export const DOI: React.FC = () => {
 								<a
 									href="https://opencitations.net/"
 									target="_blank"
-									rel="noreferrer"
+									rel="noopener nofollow"
 									className="link link-primary"
 								>
 									OpenCitations
@@ -239,7 +239,7 @@ export const DOI: React.FC = () => {
 								<a
 									href="https://altmetric.com"
 									target="_blank"
-									rel="noreferrer"
+									rel="noopener nofollow"
 									className="link link-primary"
 								>
 									Altmetric

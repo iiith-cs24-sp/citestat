@@ -53,7 +53,7 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 								<a
 									href="https://www.crossref.org/"
 									target="_blank"
-									rel="noreferrer"
+									rel="noopener nofollow"
 									className="link link-primary"
 								>
 									Crossref
@@ -119,7 +119,7 @@ const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
 								<a
 									href="https://orcid.org/"
 									target="_blank"
-									rel="noreferrer"
+									rel="noopener nofollow"
 									className="link link-primary"
 								>
 									orcid.org
