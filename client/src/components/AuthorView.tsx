@@ -37,6 +37,15 @@ interface AuthorViewProps {
  * @returns React component displaying data for author
  */
 const AuthorView: React.FC<AuthorViewProps> = ({ name, orcid, works }) => {
+	if (!works.length) {
+		return (
+			<div className="mb-8">
+				<h1 className="text-3xl font-bold">{name}</h1>
+				<p className="text-2xl mt-4">No works found for Author!</p>
+			</div>
+		);
+	}
+
 	const hIndex = getHIndex(works);
 
 	return (

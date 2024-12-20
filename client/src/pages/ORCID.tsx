@@ -32,18 +32,26 @@ export const ORCID: React.FC = () => {
 
 				await authorFetch.json().then((res) => {
 					console.log(res);
-					const work: Work = res.message.items[0];
-					const contributors: Author[] = (work.author ?? []).concat(
-						work.editor ?? [],
-					);
-					// Find author name from the list of authors using the ORCID
-					const author: Author = contributors.find((author) =>
-						author.ORCID?.includes(orcid),
-					)!;
-					console.log(contributors);
-					setAuthorName(
-						(author?.given ?? "") + " " + (author?.family ?? ""),
-					);
+					if (!res.message.items || !res.message.items.length)
+						setAuthorName(
+							`Author details not found for ORCID ${orcid}`,
+						);
+					else {
+						const work: Work = res.message.items[0];
+						const contributors: Author[] = (
+							work.author ?? []
+						).concat(work.editor ?? []);
+						// Find author name from the list of authors using the ORCID
+						const author: Author = contributors.find((author) =>
+							author.ORCID?.includes(orcid),
+						)!;
+						console.log(contributors);
+						setAuthorName(
+							(author?.given ?? "") +
+								" " +
+								(author?.family ?? ""),
+						);
+					}
 				});
 
 				const response = await fetch(
@@ -56,15 +64,18 @@ export const ORCID: React.FC = () => {
 
 				await response.json().then((res) => {
 					console.log(res);
-					setWorks(
-						res.message.items.filter(
-							// Only authors, not editors
-							(item: Work) =>
-								item.author?.find((author) =>
-									author.ORCID?.includes(orcid),
-								) !== undefined,
-						) as Work[],
-					);
+					if (!res.message.items || !res.message.items.length)
+						setWorks([]);
+					else
+						setWorks(
+							res.message.items.filter(
+								// Only authors, not editors
+								(item: Work) =>
+									item.author?.find((author) =>
+										author.ORCID?.includes(orcid),
+									) !== undefined,
+							) as Work[],
+						);
 				});
 			} catch (err) {
 				setError((err as Error).message);
